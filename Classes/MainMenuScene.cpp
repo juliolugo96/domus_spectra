@@ -44,7 +44,9 @@ void MainMenuScene::AddBackground()
 
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
-    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, ScreenSize.height/2 + Origin.y };
+
+    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
+                            ScreenSize.height/2 + Origin.y };
 
     background->setPosition(CenterPos);
 
@@ -53,21 +55,30 @@ void MainMenuScene::AddBackground()
 
 void MainMenuScene::AddMenu()
 {
-    RefPtr<MenuItemImage> play_button = MenuItemImage::create("play.png", 
-                                        "play.png", 
-                                        CC_CALLBACK_1(Curr_Class::OnPlayPressed, 
-                                        this));
+    RefPtr<MenuItemImage> play = MenuItemImage::create("music-on.png", "music-on.png",
+                                CC_CALLBACK_1(Curr_Class::OnPlayPressed, this));
 
-    RefPtr<MenuItemImage> music_button = MenuItemImage::create("music-on.png", 
-                                        "music-off.png", 
-                                        CC_CALLBACK_1(Curr_Class::OnMusicPressed, 
-                                        this));
+    RefPtr<MenuItemImage> sound_On = MenuItemImage::create("music-on.png", 
+                                        "music-off.png");
 
-    RefPtr<Menu> main_menu = Menu::create(play_button.get(), 
-                                            music_button.get(), NULL);
+    RefPtr<MenuItemImage> sound_Off = MenuItemImage::create("music-off.png", 
+                                        "music-off.png");
 
-    play_button->setPosition(Vec2(CenterPos.x - play_button->getContentSize().width/2, CenterPos.y - play_button->getContentSize().height/2));
-    main_menu->setPosition(Vec2::ZERO);    
+    RefPtr<MenuItemToggle> toggle = MenuItemToggle::createWithTarget(this, 
+                                    menu_selector(Curr_Class::OnMusicPressed), 
+                                    sound_On.get(), sound_Off.get(), NULL);
+
+    RefPtr<Menu> main_menu = Menu::create(play.get(), 
+                                            toggle.get(), NULL);
+
+    Size const ScreenSize = sDirector->getVisibleSize();
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
+                             ScreenSize.height/2 + Origin.y };
+
+    main_menu->setPosition(CenterPos);
+    main_menu->alignItemsVerticallyWithPadding(1.5f);
+     
     this->addChild(main_menu);
 }
 

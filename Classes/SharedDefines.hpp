@@ -7,3 +7,5 @@ static CocosDenshion::SimpleAudioEngine* const & sAudioEngine = CocosDenshion::S
 static cocos2d::Size const ScreenSize = sDirector->getVisibleSize();
 static cocos2d::Vec2 const Origin = sDirector->getVisibleOrigin();
 static cocos2d::Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, ScreenSize.height/2 + Origin.y };
+
+using uint8 = uint8_t;
