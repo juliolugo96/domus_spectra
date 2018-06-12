@@ -9,3 +9,5 @@ static cocos2d::Vec2 const Origin = sDirector->getVisibleOrigin();
 static cocos2d::Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, ScreenSize.height/2 + Origin.y };
 
 using uint8 = uint8_t;
+using int8 = int8_t;
+using uint16 = uint16_t;
