@@ -126,7 +126,8 @@ void AppDelegate::AddSearchPaths()
     {
         std::string("res"),
         std::string("res/menu"),
-        std::string("res/characters")
+        std::string("res/characters"),
+        std::string("res/scenarios")
     };
 
     sFileUtils->setSearchPaths(resourcesPath);

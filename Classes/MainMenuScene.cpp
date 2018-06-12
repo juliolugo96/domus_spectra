@@ -1,4 +1,5 @@
 # include "MainMenuScene.hpp"
+# include "EntranceScene.hpp"
 
 MainMenuScene::MainMenuScene() : Layer()
 {
@@ -84,7 +85,9 @@ void MainMenuScene::AddMenu()
 
 void MainMenuScene::OnPlayPressed(Ref* /**/)
 {
+    RefPtr<Scene> init_level = Entrance::createScene();
 
+    sDirector->replaceScene(init_level.get());
 }
 
 void MainMenuScene::OnMusicPressed(Ref* /**/)

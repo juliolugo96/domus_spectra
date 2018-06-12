@@ -159,6 +159,7 @@ set(GAME_SRC
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
         Classes/MainMenuScene.cpp
+        Classes/EntranceScene.cpp
         )
 
 set(GAME_HEADERS
@@ -166,6 +167,7 @@ set(GAME_HEADERS
         Classes/AppDelegate.h
         Classes/HelloWorldScene.h
         Classes/MainMenuScene.hpp
+        Classes/EntranceScene.hpp
         Classes/SharedDefines.hpp
         )
 
