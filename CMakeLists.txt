@@ -34,6 +34,8 @@ set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
 
+# DeSiGNAR Location
+set(DSG "/home/berti/libs/DeSiGNAR")
 
 # Some macro definitions
 if(WINDOWS)
@@ -134,6 +136,7 @@ else()
 endif()
 
 include_directories(
+    ${DSG}/include
 	/usr/local/include/GLFW
 	/usr/include/GLFW
 	${COCOS2D_ROOT}
@@ -160,6 +163,7 @@ set(GAME_SRC
         Classes/HelloWorldScene.cpp
         Classes/MainMenuScene.cpp
         Classes/EntranceScene.cpp
+        Classes/Player.cpp
         )
 
 set(GAME_HEADERS
@@ -168,6 +172,7 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/MainMenuScene.hpp
         Classes/EntranceScene.hpp
+        Classes/Player.hpp
         Classes/SharedDefines.hpp
         )
 
@@ -183,7 +188,10 @@ else()
     add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+
+ADD_LIBRARY(Designar STATIC IMPORTED)
+SET_TARGET_PROPERTIES(Designar PROPERTIES IMPORTED_LOCATION ${DSG}/lib/libDesignar.a)
+target_link_libraries(${APP_NAME} cocos2d Designar)
 
 
 if(MSVC)
