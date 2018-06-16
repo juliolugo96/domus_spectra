@@ -21,6 +21,7 @@ class Entrance : public Layer
     
     private:
         void AddBackground();
+        void AddPlayer();
 };
 
 # endif

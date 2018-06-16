@@ -87,7 +87,7 @@ void MainMenuScene::OnPlayPressed(Ref* /**/)
 {
     RefPtr<Scene> init_level = Entrance::createScene();
 
-    sDirector->replaceScene(init_level.get());
+    sDirector->replaceScene(TransitionFlipAngular::create(2.f, init_level));
 }
 
 void MainMenuScene::OnMusicPressed(Ref* /**/)

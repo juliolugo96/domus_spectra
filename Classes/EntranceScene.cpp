@@ -27,6 +27,7 @@ bool Entrance::init()
         return false;
 
     AddBackground();
+    AddPlayer();
 
     return true;
 }
@@ -47,4 +48,22 @@ void Entrance::AddBackground()
     background->setPosition(CenterPos);
 
     this->addChild(background);
+}
+
+void Entrance::AddPlayer()
+{
+    RefPtr<Player> player = Player::create();
+
+    if (player == nullptr)
+        return;
+
+    Size const ScreenSize = sDirector->getVisibleSize();
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+
+    Vec2 const spritePos = { ScreenSize.width/2 + Origin.x, 
+                            ScreenSize.height * 0.15f + Origin.y };
+
+    player->setPosition(spritePos);
+
+    this->addChild(player);
 }

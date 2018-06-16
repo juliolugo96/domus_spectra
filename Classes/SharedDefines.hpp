@@ -7,6 +7,7 @@
 # define SHARED_DEFINES_HPP
 
 static cocos2d::Director* const & sDirector = cocos2d::Director::getInstance();
+static cocos2d::SpriteFrameCache* const & sSpriteCache = cocos2d::SpriteFrameCache::getInstance();
 static CocosDenshion::SimpleAudioEngine* const & sAudioEngine = CocosDenshion::SimpleAudioEngine::getInstance();
 static cocos2d::Size const ScreenSize = sDirector->getVisibleSize();
 static cocos2d::Vec2 const Origin = sDirector->getVisibleOrigin();
