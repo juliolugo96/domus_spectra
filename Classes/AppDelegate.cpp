@@ -1,4 +1,5 @@
 #include "AppDelegate.h"
+#include "SharedDefines.hpp"
 #include "MainMenuScene.hpp"
 
 // #define USE_AUDIO_ENGINE 1
@@ -34,6 +35,8 @@ AppDelegate::~AppDelegate()
 #elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::end();
 #endif
+
+    sPlayer->destroy();
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -127,10 +130,12 @@ void AppDelegate::AddSearchPaths()
         std::string("res"),
         std::string("res/menu"),
         std::string("res/characters"),
-        std::string("res/scenarios")
+        std::string("res/characters/boss"),
+        std::string("res/characters/main_character"),
+        std::string("res/scenarios"),
+        std::string("audio")
     };
 
     sFileUtils->setSearchPaths(resourcesPath);
-
     sSpriteCache->addSpriteFramesWithFile("spriteSheet.plist");
 }

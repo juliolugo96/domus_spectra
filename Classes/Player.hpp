@@ -1,21 +1,13 @@
-# include "SharedDefines.hpp"
-# include <array.H>
-
 # ifndef PLAYER_HPP
 # define PLAYER_HPP
+
+# include "SharedDefines.hpp"
+# include <array.H>
 
 using namespace cocos2d;
 using namespace Designar;
 
-enum class Orientation
-{
-    North,
-    South,
-    West,
-    East,
-};
-
-using KeyCodeInfo = std::pair<EventKeyboard::KeyCode, Orientation>;
+using KeyForMoveInfo = std::pair<EventKeyboard::KeyCode, Orientation>;
 
 class Player : public Sprite
 {
@@ -29,24 +21,40 @@ class Player : public Sprite
         Orientation getOrientation() const;
 
         static Player* create();
+        static Player* getInstance();
+        static void destroy();
 
-        bool initWithFile(const std::string & fileName) override;
+        bool initWithSpriteFrame(SpriteFrame* /**/) override;
         
         void setOrientation(Orientation ori);
         void modHp(int8 const value);
         
-        void moveToPoint(Vec2 const & tgt);
         void shoot();
-    
+        bool isOnScene() const;
+        void onEnter() override;
+        void update(float  /**/) override;
+
     private:
         void onKeyPressed(EventKeyboard::KeyCode /**/, Event* /**/);
-        void removeBullet(Node* /**/, bool /**/);
+        void onAnimationFinish(Node* /**/, bool /**/);
+        void debugPosition() const;
 
+        void initKeyMoveArray();
+        
+        Animation* getWalkAnimation(Orientation /**/);
+        Vec2 getDestByOrientation(Orientation /**/);
+        void moveToPoint(Vec2 const & tgt);
+        
+        void dead();
+
+        bool isDead;
         Orientation orientation;
         uint16 score;
         int8 life;
 
-        DynArray<KeyCodeInfo> keyMovement;
+        DynArray<KeyForMoveInfo> keyMovement;
+
 };
+
 
 # endif
