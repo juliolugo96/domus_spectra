@@ -409,7 +409,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>main_character/pcEWalkEnd.png</key>
+            <key>main_character/pcEWalk1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -424,7 +424,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>main_character/pcEWalkInit.png</key>
+            <key>main_character/pcEWalk2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -754,7 +754,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>main_character/pcWWalkEnd.png</key>
+            <key>main_character/pcWWalk1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -769,7 +769,7 @@
                 <key>textureRotated</key>
                 <true/>
             </dict>
-            <key>main_character/pcWWalkInit.png</key>
+            <key>main_character/pcWWalk2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -933,7 +933,7 @@
             <key>size</key>
             <string>{1641,892}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:770594e5efab8543237ce2bb91e4203c:59b4cef03ae26cc056c178d122f3a2a3:729b5d0704dd08312fe735435954a50e$</string>
+            <string>$TexturePacker:SmartUpdate:a14fb201ffd3362473001ba54c74b1b5:1a200739c0a0ccb940c3f3bdc71090ae:729b5d0704dd08312fe735435954a50e$</string>
             <key>textureFileName</key>
             <string>spriteSheet.png</string>
         </dict>
