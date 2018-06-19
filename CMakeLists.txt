@@ -163,7 +163,10 @@ set(GAME_SRC
         Classes/HelloWorldScene.cpp
         Classes/MainMenuScene.cpp
         Classes/EntranceScene.cpp
+        Classes/FinalScene.cpp
         Classes/Player.cpp
+        Classes/Enemy.cpp
+        Classes/Boss.cpp
         )
 
 set(GAME_HEADERS
@@ -172,7 +175,10 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/MainMenuScene.hpp
         Classes/EntranceScene.hpp
+        Classes/FinalScene.hpp
         Classes/Player.hpp
+        Classes/Enemy.hpp
+        Classes/Boss.hpp
         Classes/SharedDefines.hpp
         )
 
