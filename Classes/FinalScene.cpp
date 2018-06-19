@@ -41,7 +41,7 @@ bool FinalScene::init()
 
 void FinalScene::AddAudio()
 {
-    sAudioEngine->playBackgroundMusic("final_stage.mp3", true);
+    sAudioEngine->playBackgroundMusic("final-stage.mp3", true);
 }
 
 void FinalScene::AddBackground()
