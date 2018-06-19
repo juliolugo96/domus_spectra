@@ -1,5 +1,6 @@
 # include "EntranceScene.hpp"
 # include "Player.hpp"
+# include "Enemy.hpp"
 
 Entrance::Entrance()
 {}
@@ -17,6 +18,8 @@ Scene* Entrance::createScene()
         return nullptr;
 
     main_screen->addChild(main_layer);
+
+    main_screen->setTag(SceneTags::Entrance);
 
     return main_screen;
 }
@@ -52,7 +55,7 @@ void Entrance::AddBackground()
 
 void Entrance::AddPlayer()
 {
-    RefPtr<Player> player = Player::create();
+    RefPtr<Player> player = sPlayer;
 
     if (player == nullptr)
         return;
