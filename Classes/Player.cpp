@@ -51,6 +51,7 @@ Player* Player::create()
     return nullptr;
 }
 
+
 bool Player::initWithSpriteFrame(SpriteFrame* frame)
 {
     if (!Sprite::initWithSpriteFrame(frame))
@@ -64,8 +65,23 @@ bool Player::initWithSpriteFrame(SpriteFrame* frame)
 
     setOrientation(Orientation::North);
     initKeyMoveArray();
+    addPhysicShape();
 
     return true;
+}
+
+void Player::addPhysicShape()
+{
+    RefPtr<PhysicsBody> body = PhysicsBody::createBox(getContentSize()/2.f);
+
+    if (body == nullptr)
+        return;
+    
+    body->setGravityEnable(false);
+    body->setTag(SpriteTags::PLAYER);
+
+    this->addComponent(body);
+
 }
 
 void Player::update(float dt)

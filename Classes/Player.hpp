@@ -39,6 +39,7 @@ class Player : public Sprite
         void onAnimationFinish(Node* /**/, bool /**/);
         void debugPosition() const;
 
+        void addPhysicShape();
         void initKeyMoveArray();
         
         Animation* getWalkAnimation(Orientation /**/);

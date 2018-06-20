@@ -1,6 +1,7 @@
 # include "EntranceScene.hpp"
 # include "Player.hpp"
 # include "Enemy.hpp"
+# include "Objects.hpp"
 
 Entrance::Entrance()
 {}
@@ -10,7 +11,7 @@ Entrance::~Entrance()
 
 Scene* Entrance::createScene()
 {
-    RefPtr<Scene> main_screen = Scene::create();
+    RefPtr<Scene> main_screen = Scene::createWithPhysics();
 
     RefPtr<Layer> main_layer = Entrance::create();
 
@@ -30,6 +31,7 @@ bool Entrance::init()
         return false;
 
     AddBackground();
+    AddMedicalBox();
     AddPlayer();
 
     return true;
@@ -69,4 +71,22 @@ void Entrance::AddPlayer()
     player->setPosition(spritePos);
 
     this->addChild(player);
+}
+
+void Entrance::AddMedicalBox()
+{
+    RefPtr<Sprite> box = MedicalBox::create();
+
+    if (box == nullptr)
+        return;
+    
+    Size const ScreenSize = sDirector->getVisibleSize();
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+
+    Vec2 const spritePos = { ScreenSize.width/2 + Origin.x, 
+                            ScreenSize.height * 0.45f + Origin.y };
+
+    box->setPosition(spritePos);
+
+    this->addChild(box);
 }
