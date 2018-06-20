@@ -39,6 +39,7 @@ bool MedicalBox::initWithSpriteFrame(SpriteFrame* frame)
   PhysicsBody* boxShape = PhysicsBody::createBox(getContentSize());
 
   boxShape->setGravityEnable(false);
+  boxShape->setDynamic(false);
   boxShape->setTag(SpriteTags::MEDICALBOX);
 
   this->addComponent(boxShape);
@@ -90,6 +91,22 @@ Bullet* Bullet::create()
 
   CC_SAFE_DELETE(sprite);
   return nullptr;
+}
+
+bool Bullet::initWithSpriteFrame(SpriteFrame* frame)
+{
+  if (!Sprite::initWithSpriteFrame(frame))
+    return false;
+
+  PhysicsBody* body = PhysicsBody::createBox(getContentSize());
+
+  body->setGravityEnable(false);
+  body->setTag(SpriteTags::BULLET);
+  body->setDynamic(false);
+
+  addComponent(body);
+  
+  return true;
 }
 
 Vec2 Bullet::getDestByOrientation()

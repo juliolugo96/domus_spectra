@@ -44,6 +44,7 @@ class Player : public Sprite
         void initKeyMoveArray();
         
         Animation* getWalkAnimation(Orientation /**/);
+        Animation* getShootAnimation(Orientation /**/);
         Vec2 getDestByOrientation(Orientation /**/);
         void moveToPoint(Vec2 const & tgt);
         

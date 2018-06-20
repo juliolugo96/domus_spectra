@@ -12,7 +12,7 @@ class InteractableObject : public Sprite
         {}
 
         ~InteractableObject() { /**/ }
-
+        
         virtual bool onContactBegin(PhysicsContact & /**/) = 0;
         std::string const & getSpriteName() { return spriteName; }
     
@@ -45,6 +45,8 @@ class Bullet : public InteractableObject
         using Curr_Class = Bullet;
 
         static Bullet* create();
+
+        bool initWithSpriteFrame(SpriteFrame* /**/) override;
 
         bool onContactBegin(PhysicsContact & /**/) override;
 

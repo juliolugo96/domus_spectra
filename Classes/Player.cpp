@@ -80,6 +80,7 @@ void Player::addPhysicShape()
     
     body->setGravityEnable(false);
     body->setTag(SpriteTags::PLAYER);
+    body->setDynamic(false);
 
     auto* contactListener = EventListenerPhysicsContact::create();
 
@@ -203,6 +204,66 @@ Animation* Player::getWalkAnimation(Orientation ori)
     return anim;
 }
 
+Animation* Player::getShootAnimation(Orientation ori)
+{
+    Animation* anim = Animation::create();
+    
+    std::string shoot("main_character/pcEShoot%i.png");
+    std::string stand("main_character/pcE.png");
+
+    switch (ori)
+    {
+        case Orientation::West:
+        {
+            shoot[17] = 'W';
+            stand[17] = 'W';
+            break;
+        }
+
+        case Orientation::South:
+        {
+            shoot[17] = 'S';
+            stand[17] = 'S';
+            break;
+        }
+        
+        case Orientation::North:
+        {
+            shoot[17] = 'N';
+            stand[17] = 'N';
+            break;
+        }
+
+        case Orientation::East:
+        {
+            shoot[17] = 'E';
+            stand[17] = 'E';
+            break;
+        }
+
+        default : return nullptr;
+    }
+
+    for (int8 i = 1; i < 3; ++i)
+    {
+        String* path = String::createWithFormat(shoot.c_str(), i);
+        SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(path->getCString());
+
+        if (frame != nullptr)
+            anim->addSpriteFrame(frame);
+    }
+
+    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(stand.c_str());
+
+    if (frame != nullptr)
+        anim->addSpriteFrame(frame);
+
+    anim->setDelayPerUnit(1.f/5.f);
+    anim->setRestoreOriginalFrame(false);
+
+    return anim;
+}
+
 void Player::shoot()
 {
     Bullet* bullet = Bullet::create();
@@ -216,9 +277,18 @@ void Player::shoot()
         return;
 
     bullet->setOrientation(getOrientation());
-    bullet->setPosition(getPosition());
+
+    Vec2 bulletPos = getPositionAwayFrom(*this, getOrientation());
+
+    bullet->setPosition(bulletPos);
 
     curr_scene->addChild(bullet);
+
+    Animate* anim = Animate::create(getShootAnimation(getOrientation()));
+
+    runAction(anim);
+
+    sAudioEngine->playEffect("shoot.mp3", false, 1.f, 1.f);
 }
 
 void Player::onEnter()
@@ -311,7 +381,7 @@ Vec2 Player::getDestByOrientation(Orientation ori)
 
 void Player::moveToPoint(Vec2 const & tgt)
 {
-    MoveTo* move = MoveTo::create(1.2f, tgt);
+    MoveTo* move = MoveTo::create(0.5f, tgt);
 
     CallFuncN* stopAnim = CallFuncN::create(CC_CALLBACK_1(
         Curr_Class::onAnimationFinish, this, true));
