@@ -80,6 +80,12 @@ void Player::addPhysicShape()
     body->setGravityEnable(false);
     body->setTag(SpriteTags::PLAYER);
 
+    auto* contactListener = EventListenerPhysicsContact::create();
+
+    contactListener->onContactBegin = CC_CALLBACK_1(Curr_Class::onContactBegin, this);
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
     this->addComponent(body);
 
 }
@@ -232,6 +238,11 @@ void Player::onEnter()
             break;
         }
     }
+}
+
+bool Player::onContactBegin(PhysicsContact & contact)
+{
+
 }
 
 void Player::debugPosition() const

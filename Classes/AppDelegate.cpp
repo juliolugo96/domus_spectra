@@ -137,5 +137,7 @@ void AppDelegate::AddSearchPaths()
     };
 
     sFileUtils->setSearchPaths(resourcesPath);
-    sSpriteCache->addSpriteFramesWithFile("spriteSheet.plist");
+    sSpriteCache->addSpriteFramesWithFile("spriteSheet-0.plist");
+    sSpriteCache->addSpriteFramesWithFile("spriteSheet-1.plist");
+    sSpriteCache->addSpriteFramesWithFile("spriteSheet-2.plist");
 }

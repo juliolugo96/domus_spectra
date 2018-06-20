@@ -31,6 +31,7 @@ class Player : public Sprite
         
         void shoot();
         bool isOnScene() const;
+        bool onContactBegin(PhysicsContact & /**/);
         void onEnter() override;
         void update(float  /**/) override;
 
