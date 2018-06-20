@@ -167,6 +167,7 @@ set(GAME_SRC
         Classes/Player.cpp
         Classes/Enemy.cpp
         Classes/Boss.cpp
+        Classes/Objects.cpp
         )
 
 set(GAME_HEADERS
@@ -179,6 +180,7 @@ set(GAME_HEADERS
         Classes/Player.hpp
         Classes/Enemy.hpp
         Classes/Boss.hpp
+        Classes/Objects.hpp
         Classes/SharedDefines.hpp
         )
 
