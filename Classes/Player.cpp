@@ -1,5 +1,6 @@
 # include "Player.hpp"
 # include "FinalScene.hpp"
+# include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
 
@@ -204,7 +205,20 @@ Animation* Player::getWalkAnimation(Orientation ori)
 
 void Player::shoot()
 {
-    dead();
+    Bullet* bullet = Bullet::create();
+
+    if (bullet == nullptr)  
+        return;
+
+    Scene* curr_scene = getScene();
+
+    if (curr_scene == nullptr)
+        return;
+
+    bullet->setOrientation(getOrientation());
+    bullet->setPosition(getPosition());
+
+    curr_scene->addChild(bullet);
 }
 
 void Player::onEnter()
@@ -242,7 +256,7 @@ void Player::onEnter()
 
 bool Player::onContactBegin(PhysicsContact & contact)
 {
-
+    return true;
 }
 
 void Player::debugPosition() const
