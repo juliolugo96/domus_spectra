@@ -133,6 +133,7 @@ void AppDelegate::AddSearchPaths()
         std::string("res/characters/boss"),
         std::string("res/characters/main_character"),
         std::string("res/scenarios"),
+        std::string("res/shaders"),
         std::string("audio")
     };
 

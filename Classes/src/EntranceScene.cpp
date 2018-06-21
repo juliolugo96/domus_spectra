@@ -3,7 +3,7 @@
 # include "Enemy.hpp"
 # include "Objects.hpp"
 
-Entrance::Entrance()
+Entrance::Entrance() : isOnDoor(false), shadowLayer(nullptr)
 {}
 
 Entrance::~Entrance()
@@ -45,20 +45,20 @@ void Entrance::update(float dt)
 {
     Layer::update(dt);
 
-    Player* player = sPlayer;
-
-    if (player == nullptr)
+    if (sPlayer == nullptr)
         return;
 
-    if (triggerArea.containsPoint(player->getPosition())
-        && player->getOrientation() == Orientation::North)
+    shadowLayer->setLightPosition(sPlayer->getPosition());
+
+    if (triggerArea.containsPoint(sPlayer->getPosition())
+        && sPlayer->getOrientation() == Orientation::North)
     {
         HandleButton(true);
-        player->setOpenDoor(true);
+        sPlayer->setOpenDoor(true);
     }
     else
     {
-        player->setOpenDoor(false);
+        sPlayer->setOpenDoor(false);
         HandleButton(false);
     }
 }
@@ -76,7 +76,10 @@ void Entrance::AddBackground()
     Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
                             ScreenSize.height/2 + Origin.y };
 
+    shadowLayer = ShadowLayer::create();
+
     background->setPosition(CenterPos);
+    background->addChild(shadowLayer);
 
     this->addChild(background);
 }
@@ -91,14 +94,15 @@ void Entrance::AddPlayer()
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
-    Vec2 const spritePos = { ScreenSize.width/2 + Origin.x, 
+    Vec2 const playerPos = { ScreenSize.width/2 + Origin.x, 
                             ScreenSize.height * 0.15f + Origin.y };
 
-    player->setPosition(spritePos);
+    player->setPosition(playerPos);
 
-    this->addChild(player, 0);
+    shadowLayer->setLightPosition(playerPos);
+    shadowLayer->setLightSize(0.7f + 100.f);
 
-
+    this->addChild(player);
 }
 
 void Entrance::AddMedicalBox()
