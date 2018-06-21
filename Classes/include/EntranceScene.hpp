@@ -2,6 +2,7 @@
 # define ENTRANCE_SCENE_HPP
 
 # include "SharedDefines.hpp"
+# include "ShadowLayer.hpp"
 
 using namespace cocos2d;
 
@@ -29,6 +30,7 @@ class Entrance : public Layer
 
         Rect triggerArea;
         bool isOnDoor;
+        RefPtr<ShadowLayer> shadowLayer;
 };
 
 # endif
