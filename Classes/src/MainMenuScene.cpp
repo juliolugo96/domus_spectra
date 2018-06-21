@@ -111,6 +111,7 @@ void MainMenuScene::onPlayPressed(Ref* /**/)
 
 void MainMenuScene::onExitPressed(Ref* /**/)
 {
+    sAudioEngine->stopBackgroundMusic(true);
     sDirector->end();
 }
 

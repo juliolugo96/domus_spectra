@@ -52,14 +52,14 @@ if(APPLE OR WINDOWS)
 endif()
 
 include_directories(
-        Classes
+        Classes/include
         ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
         ${DSG}/include
 )
 # add cross-platforms source files and header files
 
-file(GLOB_RECURSE GAME_SOURCE "Classes/*.cpp")
-file(GLOB_RECURSE GAME_HEADER "Classes/.*hpp")
+file(GLOB_RECURSE GAME_SOURCE "Classes/src/*.cpp")
+file(GLOB_RECURSE GAME_HEADER "Classes/include/.*hpp")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
