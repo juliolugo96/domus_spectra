@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Directories
+/cocos2d/*
+/linux-build/
