@@ -1,5 +1,6 @@
 # include "Player.hpp"
 # include "FinalScene.hpp"
+# include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
 
@@ -60,12 +61,15 @@ bool Player::initWithSpriteFrame(SpriteFrame* frame)
     RefPtr<EventListenerKeyboard> listener = EventListenerKeyboard::create();
 
     listener->onKeyPressed = CC_CALLBACK_2(Curr_Class::onKeyPressed, this);
+    listener->onKeyReleased = CC_CALLBACK_2(Curr_Class::onKeyReleased, this);
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     setOrientation(Orientation::North);
     initKeyMoveArray();
     addPhysicShape();
+
+    this->scheduleUpdate();
 
     return true;
 }
@@ -79,6 +83,7 @@ void Player::addPhysicShape()
     
     body->setGravityEnable(false);
     body->setTag(SpriteTags::PLAYER);
+    body->setDynamic(false);
 
     auto* contactListener = EventListenerPhysicsContact::create();
 
@@ -92,10 +97,19 @@ void Player::addPhysicShape()
 
 void Player::update(float dt)
 {
-    if (isDead)
-        stopAllActions();
-
     Sprite::update(dt);
+
+    if (isDead)
+    {
+        stopAllActions();
+        return;        
+    }
+
+    for (auto & it : keyMovement)
+    {
+        if (keysPressed.find(it.first) != keysPressed.end())
+            onKeyPressed(it.first, nullptr);
+    }
 }
 
 void Player::modHp(int8 const value)
@@ -202,9 +216,91 @@ Animation* Player::getWalkAnimation(Orientation ori)
     return anim;
 }
 
+Animation* Player::getShootAnimation(Orientation ori)
+{
+    Animation* anim = Animation::create();
+    
+    std::string shoot("main_character/pcEShoot%i.png");
+    std::string stand("main_character/pcE.png");
+
+    switch (ori)
+    {
+        case Orientation::West:
+        {
+            shoot[17] = 'W';
+            stand[17] = 'W';
+            break;
+        }
+
+        case Orientation::South:
+        {
+            shoot[17] = 'S';
+            stand[17] = 'S';
+            break;
+        }
+        
+        case Orientation::North:
+        {
+            shoot[17] = 'N';
+            stand[17] = 'N';
+            break;
+        }
+
+        case Orientation::East:
+        {
+            shoot[17] = 'E';
+            stand[17] = 'E';
+            break;
+        }
+
+        default : return nullptr;
+    }
+
+    for (int8 i = 1; i < 3; ++i)
+    {
+        String* path = String::createWithFormat(shoot.c_str(), i);
+        SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(path->getCString());
+
+        if (frame != nullptr)
+            anim->addSpriteFrame(frame);
+    }
+
+    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(stand.c_str());
+
+    if (frame != nullptr)
+        anim->addSpriteFrame(frame);
+
+    anim->setDelayPerUnit(1.f/5.f);
+    anim->setRestoreOriginalFrame(false);
+
+    return anim;
+}
+
 void Player::shoot()
 {
-    dead();
+    Bullet* bullet = Bullet::create();
+
+    if (bullet == nullptr)  
+        return;
+
+    Scene* curr_scene = getScene();
+
+    if (curr_scene == nullptr)
+        return;
+
+    bullet->setOrientation(getOrientation());
+
+    Vec2 bulletPos = getPositionAwayFrom(*this, getOrientation());
+
+    bullet->setPosition(bulletPos);
+
+    curr_scene->addChild(bullet);
+
+    Animate* anim = Animate::create(getShootAnimation(getOrientation()));
+
+    runAction(anim);
+
+    sAudioEngine->playEffect("shoot.mp3", false, 1.f, 1.f);
 }
 
 void Player::onEnter()
@@ -242,7 +338,7 @@ void Player::onEnter()
 
 bool Player::onContactBegin(PhysicsContact & contact)
 {
-
+    return true;
 }
 
 void Player::debugPosition() const
@@ -297,7 +393,9 @@ Vec2 Player::getDestByOrientation(Orientation ori)
 
 void Player::moveToPoint(Vec2 const & tgt)
 {
-    MoveTo* move = MoveTo::create(1.2f, tgt);
+    MoveTo* move = MoveTo::create(0.5f, tgt);
+
+    move->setTag(ActionTags::MOVEMENT);
 
     CallFuncN* stopAnim = CallFuncN::create(CC_CALLBACK_1(
         Curr_Class::onAnimationFinish, this, true));
@@ -320,20 +418,36 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     if (key == nullptr)
         return;
 
-    stopAllActions();
+    if (keysPressed.find(keyCode) == keysPressed.end())
+        keysPressed[keyCode] = std::chrono::high_resolution_clock::now();
 
     setOrientation(key->second);
 
     moveToPoint(getDestByOrientation(key->second));
 
-    Animate* anim = Animate::create(getWalkAnimation(key->second));
+    if (getActionManager()->getActionByTag(ActionTags::ANIMATE, this) == nullptr)
+    {
+        Animate* anim = Animate::create(getWalkAnimation(key->second));
 
-    RepeatForever* repeat = RepeatForever::create(anim);
+        RepeatForever* repeat = RepeatForever::create(anim);
+        repeat->setTag(ActionTags::ANIMATE);        
+        runAction(repeat);
+    }
+}
 
-    runAction(repeat);
+void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /**/)
+{
+    KeyForMoveInfo* key = keyMovement.search_ptr([&keyCode] (KeyForMoveInfo & it) -> bool
+    {
+        return it.first == keyCode;
+    });
+
+    if (key != nullptr)
+        stopAllActions();
+
+    keysPressed.erase(keyCode);
 }
 
 void Player::onAnimationFinish(Node* sender, bool cleanup)
 {
-    stopAllActions();
 }

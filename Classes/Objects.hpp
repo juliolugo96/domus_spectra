@@ -12,7 +12,7 @@ class InteractableObject : public Sprite
         {}
 
         ~InteractableObject() { /**/ }
-
+        
         virtual bool onContactBegin(PhysicsContact & /**/) = 0;
         std::string const & getSpriteName() { return spriteName; }
     
@@ -34,6 +34,37 @@ class MedicalBox : public InteractableObject
         bool initWithSpriteFrame(SpriteFrame* /**/) override;
 
         bool onContactBegin(PhysicsContact & /**/) override;
+};
+
+class Bullet : public InteractableObject
+{
+    public:
+        Bullet(std::string const & name);
+        ~Bullet();
+
+        using Curr_Class = Bullet;
+
+        static Bullet* create();
+
+        bool initWithSpriteFrame(SpriteFrame* /**/) override;
+
+        bool onContactBegin(PhysicsContact & /**/) override;
+
+        Vec2 getDestByOrientation();
+
+        Orientation getOrientation() const { return curr_ori; }
+
+        void setOrientation(Orientation ori) { curr_ori = ori; }
+
+        void onEnter() override;
+
+        void onMoveFinished(Node* /**/, bool /**/);
+
+
+    private:
+        void rotateByOrientation();
+                
+        Orientation curr_ori;
 };
 
 # endif
