@@ -1,4 +1,4 @@
-#include "AppDelegate.h"
+#include "AppDelegate.hpp"
 #include "SharedDefines.hpp"
 #include "MainMenuScene.hpp"
 

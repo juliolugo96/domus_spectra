@@ -1,5 +1,5 @@
-#ifndef  _APP_DELEGATE_H_
-#define  _APP_DELEGATE_H_
+#ifndef  _APP_DELEGATE_HPP_
+#define  _APP_DELEGATE_HPP_
 
 # include "SharedDefines.hpp"
 
