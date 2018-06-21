@@ -23,6 +23,7 @@ class Entrance : public Layer
         void AddBackground();
         void AddPlayer();
         void AddMedicalBox();
+        void AddDoor();
 };
 
 # endif

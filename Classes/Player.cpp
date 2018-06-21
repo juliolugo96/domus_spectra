@@ -408,7 +408,16 @@ void Player::moveToPoint(Vec2 const & tgt)
 void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_SPACE)
+    {
         shoot();
+        return;        
+    }
+
+    if (keyCode == EventKeyboard::KeyCode::KEY_P)
+    {
+        debugPosition();
+        return;
+    }
 
     KeyForMoveInfo* key = keyMovement.search_ptr([&keyCode] (KeyForMoveInfo & it) -> bool
     {
