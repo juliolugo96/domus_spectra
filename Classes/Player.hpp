@@ -28,7 +28,9 @@ class Player : public Sprite
         static void destroy();
 
         bool initWithSpriteFrame(SpriteFrame* /**/) override;
-        
+        bool isEnableForOpenDoor() const { return canUseDoor; }
+
+        void setOpenDoor(bool enable) { canUseDoor = enable; }
         void setOrientation(Orientation ori);
         void modHp(int8 const value);
         
@@ -54,8 +56,10 @@ class Player : public Sprite
         void moveToPoint(Vec2 const & tgt);
         
         void dead();
+        void useEntrance();
 
         bool isDead;
+        bool canUseDoor;
         Orientation orientation;
         uint16 score;
         int8 life;

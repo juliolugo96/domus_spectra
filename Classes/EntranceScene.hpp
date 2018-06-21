@@ -17,14 +17,20 @@ class Entrance : public Layer
         static Scene* createScene();
 
         using Curr_Class = Entrance;
-        void update(float dt) override;
         bool init() override;
 
+        void update(float /**/) override;
+    
     private:
         void AddBackground();
         void AddPlayer();
         void AddMedicalBox();
-        void AddDoor();
+        void AddTriggerArea();
+        void AddBottonForUseDoor();
+        void HandleButton(bool /**/);
+
+        Rect triggerArea;
+        bool isOnDoor;
 };
 
 # endif

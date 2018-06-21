@@ -83,7 +83,6 @@ void FinalScene::AddPlayer()
 
     player->setPosition(spritePos);
 
-
     RefPtr<Sprite> boss = Boss::create();
 
     if (boss == nullptr)

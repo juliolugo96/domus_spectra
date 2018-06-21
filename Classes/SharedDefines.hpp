@@ -17,6 +17,8 @@ enum class Orientation
 enum SceneTags
 {
     Entrance = 10,
+    Hall,
+    Aisle,
     FinalStage,
 };
 

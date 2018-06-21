@@ -1,17 +1,20 @@
 # ifndef AISLE_SCENE_HPP
 # define AISLE_SCENE_HPP
 
-using namespace cocos2d;
-
 # include "SharedDefines.hpp"
 # include "Objects.hpp"
 
-class Aisle : public Layer
+using namespace cocos2d;
+
+
+class AisleScene : public Layer
 {
     public:
-        Aisle();
-        ~Aisle();
+        AisleScene();
+        ~AisleScene();
 
+        CREATE_FUNC(AisleScene);
+        
         static Scene* createScene();
 
         bool init() override;

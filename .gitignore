@@ -31,7 +31,7 @@
 *.out
 *.app
 
-# Engine
-
+# Directories
 /cocos2d/*
+/linux-build/*
 /bin/*

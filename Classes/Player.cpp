@@ -1,5 +1,7 @@
 # include "Player.hpp"
 # include "FinalScene.hpp"
+# include "AisleScene.hpp"
+# include "HallScene.hpp"
 # include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
@@ -312,6 +314,9 @@ void Player::onEnter()
     if (curr_scene == nullptr)
         return;
 
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+    Size const & ScreenSize = sDirector->getVisibleSize();
+
     switch (curr_scene->getTag())
     {
         case SceneTags::Entrance:
@@ -319,11 +324,23 @@ void Player::onEnter()
             break;
         }
 
+        case SceneTags::Hall:
+        {
+            Vec2 const tgt = { ScreenSize.width/2 + Origin.x, 
+                            ScreenSize.height * 0.15f + Origin.y };
+            
+            MoveTo* move = MoveTo::create(1.25f, tgt);
+
+            DelayTime* delay = DelayTime::create(1.5f);
+
+            Sequence* seq = Sequence::create(delay, move, nullptr);
+
+            runAction(seq);
+            break;
+        }
+
         case SceneTags::FinalStage:
         {
-            Vec2 const Origin = sDirector->getVisibleOrigin();
-            Size const & ScreenSize = sDirector->getVisibleSize();
-
             Vec2 tgt;
 
             tgt.x = ScreenSize.width * 0.15f + Origin.x;
@@ -419,6 +436,12 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
         return;
     }
 
+    if (keyCode == EventKeyboard::KeyCode::KEY_O && isEnableForOpenDoor())
+    {
+        useEntrance();
+        return;
+    }
+
     KeyForMoveInfo* key = keyMovement.search_ptr([&keyCode] (KeyForMoveInfo & it) -> bool
     {
         return it.first == keyCode;
@@ -459,4 +482,44 @@ void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /**/)
 
 void Player::onAnimationFinish(Node* sender, bool cleanup)
 {
+}
+
+void Player::useEntrance()
+{
+    Scene* curr_scene = getScene();
+
+    if (curr_scene == nullptr)
+        return;
+
+    switch (curr_scene->getTag())
+    {
+        case SceneTags::Entrance:
+        {
+            Scene* next_room = HallScene::createScene();
+            sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+            break;
+        }
+
+        case SceneTags::Aisle:
+        {
+            Scene* next_room = FinalScene::createScene();
+            sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+            break;
+        }
+
+        case SceneTags::Hall:
+        {
+            Scene* next_room = nullptr;
+            
+            if (getOrientation() == Orientation::North)
+                next_room = AisleScene::createScene();
+            
+            if (next_room != nullptr)
+                sDirector->replaceScene(TransitionFade::create(1.5, next_room));
+            
+            break;
+        }
+
+        default : break;
+    }
 }
