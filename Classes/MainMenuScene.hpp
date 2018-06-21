@@ -21,6 +21,7 @@ class MainMenuScene : public Layer
 
     private:
         void OnPlayPressed(Ref* /**/);
+        void OnExitPressed(Ref * /**/);
         void OnMusicPressed(Ref* /**/);
         void AddMenu();
         void AddBackground();

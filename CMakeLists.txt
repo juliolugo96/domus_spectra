@@ -61,6 +61,8 @@ list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/MainMenuScene.cpp
     Classes/EntranceScene.cpp
+    Classes/HallScene.cpp
+    Classes/AisleScene.cpp
     Classes/FinalScene.cpp
     Classes/Player.cpp
     Classes/Enemy.cpp
@@ -71,6 +73,8 @@ list(APPEND GAME_HEADER
       Classes/AppDelegate.h
       Classes/MainMenuScene.hpp
       Classes/EntranceScene.hpp
+      Classes/HallScene.hpp
+      Classes/HallScene.hpp
       Classes/FinalScene.hpp
       Classes/Player.hpp
       Classes/Enemy.hpp

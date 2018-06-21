@@ -20,6 +20,9 @@ Scene* MainMenuScene::createScene()
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
+    sAudioEngine->playBackgroundMusic("menu-theme.mp3", true);
+    sAudioEngine->setBackgroundMusicVolume(0.5f);
+
     main_screen->addChild(main_layer);
 
     return main_screen;
@@ -56,8 +59,11 @@ void MainMenuScene::AddBackground()
 
 void MainMenuScene::AddMenu()
 {
-    RefPtr<MenuItemImage> play = MenuItemImage::create("music-on.png", "music-on.png",
+    RefPtr<MenuItemImage> play = MenuItemImage::create("button-start.png", "button-start.png",
                                 CC_CALLBACK_1(Curr_Class::OnPlayPressed, this));
+
+    RefPtr<MenuItemImage> exit = MenuItemImage::create("button-back.png", "button-back.png",
+                                CC_CALLBACK_1(Curr_Class::OnExitPressed, this));
 
     RefPtr<MenuItemImage> sound_On = MenuItemImage::create("music-on.png", 
                                         "music-off.png");
@@ -69,7 +75,7 @@ void MainMenuScene::AddMenu()
                                     menu_selector(Curr_Class::OnMusicPressed), 
                                     sound_On.get(), sound_Off.get(), NULL);
 
-    RefPtr<Menu> main_menu = Menu::create(play.get(), 
+    RefPtr<Menu> main_menu = Menu::create(play.get(), exit.get(),
                                             toggle.get(), NULL);
 
     Size const ScreenSize = sDirector->getVisibleSize();
@@ -89,6 +95,12 @@ void MainMenuScene::OnPlayPressed(Ref* /**/)
 
     sDirector->replaceScene(TransitionFlipAngular::create(2.f, init_level));
 }
+
+void MainMenuScene::OnExitPressed(Ref* /**/)
+{
+    sDirector->end();
+}
+
 
 void MainMenuScene::OnMusicPressed(Ref* /**/)
 {

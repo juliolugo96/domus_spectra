@@ -33,8 +33,34 @@ bool Entrance::init()
     AddBackground();
     AddMedicalBox();
     AddPlayer();
+    AddTriggerArea();
+    AddBottonForUseDoor();
+
+    scheduleUpdate();
 
     return true;
+}
+
+void Entrance::update(float dt)
+{
+    Layer::update(dt);
+
+    Player* player = sPlayer;
+
+    if (player == nullptr)
+        return;
+
+    if (triggerArea.containsPoint(player->getPosition())
+        && player->getOrientation() == Orientation::North)
+    {
+        HandleButton(true);
+        player->setOpenDoor(true);
+    }
+    else
+    {
+        player->setOpenDoor(false);
+        HandleButton(false);
+    }
 }
 
 void Entrance::AddBackground()
@@ -70,7 +96,9 @@ void Entrance::AddPlayer()
 
     player->setPosition(spritePos);
 
-    this->addChild(player);
+    this->addChild(player, 0);
+
+
 }
 
 void Entrance::AddMedicalBox()
@@ -91,7 +119,68 @@ void Entrance::AddMedicalBox()
     this->addChild(box);
 }
 
-void Entrance::AddDoor()
-{
+void Entrance::AddTriggerArea()
+{   
+    Size const ScreenSize = sDirector->getVisibleSize();
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+
+    Vec2 const pos = { ScreenSize.width * 0.495f + Origin.x, 
+                            ScreenSize.height * 0.845f + Origin.y };
     
+    triggerArea = Rect(pos.x, pos.y, 20.f, 20.f);
+}
+
+void Entrance::AddBottonForUseDoor()
+{
+    RefPtr<DrawNode> button = DrawNode::create();
+    RefPtr<Label> label = Label::createWithTTF("Open Door", "fonts/Marker Felt.ttf", 18);
+
+    if (button == nullptr || label == nullptr)
+        return;
+
+    Size const ScreenSize = sDirector->getVisibleSize();
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+
+    Vec2 pos = { ScreenSize.width * 0.95f + Origin.x, 
+                            ScreenSize.height * 0.125f + Origin.y };
+    
+    button->drawDot(pos, 10.f, Color4F::RED);
+    button->setVisible(false);
+    button->setTag(100);
+
+    pos = { ScreenSize.width * 0.95f + Origin.x, 
+            ScreenSize.height * 0.10f + Origin.y };
+
+
+    label->setPosition(pos);
+    label->setVisible(false);
+    label->setTag(101);
+
+    addChild(label);
+    addChild(button);
+}
+
+void Entrance::HandleButton(bool enable)
+{
+    Node* button = getChildByTag(100);
+    Node* label = getChildByTag(101);
+
+    if (button == nullptr || label == nullptr)
+        return;
+
+    if (isOnDoor == enable)
+        return;
+        
+    isOnDoor = enable;
+
+    if (!button->isVisible() && enable)
+    {
+        button->setVisible(true);
+        label->setVisible(true);
+    }
+    else
+    {
+        button->setVisible(false);
+        label->setVisible(false);
+    }
 }

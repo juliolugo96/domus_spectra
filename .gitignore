@@ -33,4 +33,5 @@
 
 # Directories
 /cocos2d/*
-/linux-build/
+/linux-build/*
+/bin/*

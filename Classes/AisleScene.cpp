@@ -12,7 +12,7 @@ AisleScene::~AisleScene()
 
 Scene* AisleScene::createScene()
 {
-    RefPtr<Scene> main_screen = Scene::create();
+    RefPtr<Scene> main_screen = Scene::createWithPhysics();
 
     RefPtr<Layer> main_layer = AisleScene::create();
 
@@ -34,7 +34,7 @@ bool AisleScene::init()
     Sprite* background = Sprite::create("aisle.png");
 
     if (background == nullptr)
-        return;
+        return false;
     
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
@@ -48,3 +48,9 @@ bool AisleScene::init()
 
     return true;
 }
+
+void AisleScene::AddMedicalBoxes()
+{}
+
+void AisleScene::AddAmmunition()
+{}
