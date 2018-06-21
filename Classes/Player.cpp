@@ -61,12 +61,15 @@ bool Player::initWithSpriteFrame(SpriteFrame* frame)
     RefPtr<EventListenerKeyboard> listener = EventListenerKeyboard::create();
 
     listener->onKeyPressed = CC_CALLBACK_2(Curr_Class::onKeyPressed, this);
+    listener->onKeyReleased = CC_CALLBACK_2(Curr_Class::onKeyReleased, this);
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     setOrientation(Orientation::North);
     initKeyMoveArray();
     addPhysicShape();
+
+    this->scheduleUpdate();
 
     return true;
 }
@@ -94,10 +97,19 @@ void Player::addPhysicShape()
 
 void Player::update(float dt)
 {
-    if (isDead)
-        stopAllActions();
-
     Sprite::update(dt);
+
+    if (isDead)
+    {
+        stopAllActions();
+        return;        
+    }
+
+    for (auto & it : keyMovement)
+    {
+        if (keysPressed.find(it.first) != keysPressed.end())
+            onKeyPressed(it.first, nullptr);
+    }
 }
 
 void Player::modHp(int8 const value)
@@ -276,6 +288,8 @@ void Player::shoot()
     if (curr_scene == nullptr)
         return;
 
+    stopAllActions();
+
     bullet->setOrientation(getOrientation());
 
     Vec2 bulletPos = getPositionAwayFrom(*this, getOrientation());
@@ -383,6 +397,8 @@ void Player::moveToPoint(Vec2 const & tgt)
 {
     MoveTo* move = MoveTo::create(0.5f, tgt);
 
+    move->setTag(ActionTags::MOVEMENT);
+
     CallFuncN* stopAnim = CallFuncN::create(CC_CALLBACK_1(
         Curr_Class::onAnimationFinish, this, true));
 
@@ -404,20 +420,36 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     if (key == nullptr)
         return;
 
-    stopAllActions();
+    if (keysPressed.find(keyCode) == keysPressed.end())
+        keysPressed[keyCode] = std::chrono::high_resolution_clock::now();
 
     setOrientation(key->second);
 
     moveToPoint(getDestByOrientation(key->second));
 
-    Animate* anim = Animate::create(getWalkAnimation(key->second));
+    if (getActionManager()->getActionByTag(ActionTags::ANIMATE, this) == nullptr)
+    {
+        Animate* anim = Animate::create(getWalkAnimation(key->second));
 
-    RepeatForever* repeat = RepeatForever::create(anim);
+        RepeatForever* repeat = RepeatForever::create(anim);
+        repeat->setTag(ActionTags::ANIMATE);        
+        runAction(repeat);
+    }
+}
 
-    runAction(repeat);
+void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /**/)
+{
+    KeyForMoveInfo* key = keyMovement.search_ptr([&keyCode] (KeyForMoveInfo & it) -> bool
+    {
+        return it.first == keyCode;
+    });
+
+    if (key != nullptr)
+        stopAllActions();
+
+    keysPressed.erase(keyCode);
 }
 
 void Player::onAnimationFinish(Node* sender, bool cleanup)
 {
-    stopAllActions();
 }

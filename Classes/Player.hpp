@@ -3,9 +3,12 @@
 
 # include "SharedDefines.hpp"
 # include <array.H>
+# include <map>
 
 using namespace cocos2d;
 using namespace Designar;
+
+using TimePoint = std::chrono::high_resolution_clock::time_point;
 
 using KeyForMoveInfo = std::pair<EventKeyboard::KeyCode, Orientation>;
 
@@ -37,6 +40,8 @@ class Player : public Sprite
 
     private:
         void onKeyPressed(EventKeyboard::KeyCode /**/, Event* /**/);
+        void onKeyReleased(EventKeyboard::KeyCode /**/, Event* /**/);
+
         void onAnimationFinish(Node* /**/, bool /**/);
         void debugPosition() const;
 
@@ -56,7 +61,7 @@ class Player : public Sprite
         int8 life;
 
         DynArray<KeyForMoveInfo> keyMovement;
-
+        std::map<EventKeyboard::KeyCode, TimePoint> keysPressed;
 };
 
 
