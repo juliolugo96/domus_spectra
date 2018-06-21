@@ -317,10 +317,13 @@ void Player::onEnter()
     Vec2 const Origin = sDirector->getVisibleOrigin();
     Size const & ScreenSize = sDirector->getVisibleSize();
 
+    setEnterInScene(true);
+
     switch (curr_scene->getTag())
     {
         case SceneTags::Entrance:
         {
+            setEnterInScene(false);
             break;
         }
 
@@ -333,7 +336,10 @@ void Player::onEnter()
 
             DelayTime* delay = DelayTime::create(1.5f);
 
-            Sequence* seq = Sequence::create(delay, move, nullptr);
+            CallFunc* onMoveFinish = CallFuncN::create(CC_CALLBACK_1(
+                                    Curr_Class::onInitialMoveFinish, this, true));
+
+            Sequence* seq = Sequence::create(delay, move, onMoveFinish, nullptr);
 
             runAction(seq);
             break;
@@ -424,6 +430,9 @@ void Player::moveToPoint(Vec2 const & tgt)
 
 void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
+    if (isEnterInScene())
+        return;
+    
     if (keyCode == EventKeyboard::KeyCode::KEY_SPACE)
     {
         shoot();
@@ -469,6 +478,9 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 
 void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /**/)
 {
+    if (isEnterInScene())
+        return;
+
     KeyForMoveInfo* key = keyMovement.search_ptr([&keyCode] (KeyForMoveInfo & it) -> bool
     {
         return it.first == keyCode;
@@ -522,4 +534,9 @@ void Player::useEntrance()
 
         default : break;
     }
+}
+
+void Player::onInitialMoveFinish(Node* sender, bool /**/)
+{
+    setEnterInScene(false);
 }

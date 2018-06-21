@@ -28,15 +28,19 @@ class Player : public Sprite
         static void destroy();
 
         bool initWithSpriteFrame(SpriteFrame* /**/) override;
-        bool isEnableForOpenDoor() const { return canUseDoor; }
 
         void setOpenDoor(bool enable) { canUseDoor = enable; }
+        void setEnterInScene(bool enter) { isEnterOnScene = enter; }
         void setOrientation(Orientation ori);
         void modHp(int8 const value);
         
         void shoot();
         bool isOnScene() const;
         bool onContactBegin(PhysicsContact & /**/);
+
+        bool isEnterInScene() const { return isEnterOnScene; }
+        bool isEnableForOpenDoor() const { return canUseDoor; }
+        
         void onEnter() override;
         void update(float  /**/) override;
 
@@ -45,6 +49,7 @@ class Player : public Sprite
         void onKeyReleased(EventKeyboard::KeyCode /**/, Event* /**/);
 
         void onAnimationFinish(Node* /**/, bool /**/);
+        void onInitialMoveFinish(Node* /**/, bool /**/);
         void debugPosition() const;
 
         void addPhysicShape();
@@ -52,6 +57,7 @@ class Player : public Sprite
         
         Animation* getWalkAnimation(Orientation /**/);
         Animation* getShootAnimation(Orientation /**/);
+        
         Vec2 getDestByOrientation(Orientation /**/);
         void moveToPoint(Vec2 const & tgt);
         
@@ -60,6 +66,7 @@ class Player : public Sprite
 
         bool isDead;
         bool canUseDoor;
+        bool isEnterOnScene;
         Orientation orientation;
         uint16 score;
         int8 life;
