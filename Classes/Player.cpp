@@ -288,8 +288,6 @@ void Player::shoot()
     if (curr_scene == nullptr)
         return;
 
-    stopAllActions();
-
     bullet->setOrientation(getOrientation());
 
     Vec2 bulletPos = getPositionAwayFrom(*this, getOrientation());
