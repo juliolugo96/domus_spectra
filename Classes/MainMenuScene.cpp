@@ -8,7 +8,6 @@ MainMenuScene::MainMenuScene() : Layer()
 
 MainMenuScene::~MainMenuScene()
 {
-
 }
 
 Scene* MainMenuScene::createScene()
@@ -33,13 +32,21 @@ bool MainMenuScene::init()
     if (!Layer::init())
         return false;
     
-    AddBackground();
-    AddMenu();
+    addBackground();
+    addMenu();
+    addAudio();
 
     return true;
 }
 
-void MainMenuScene::AddBackground()
+void MainMenuScene::onExit()
+{
+    Layer::onExit();
+    
+    sAudioEngine->stopBackgroundMusic(true);
+}
+
+void MainMenuScene::addBackground()
 {
     RefPtr<Sprite> background = Sprite::create("menu-background.png");
 
@@ -57,13 +64,13 @@ void MainMenuScene::AddBackground()
     this->addChild(background);
 }
 
-void MainMenuScene::AddMenu()
+void MainMenuScene::addMenu()
 {
     RefPtr<MenuItemImage> play = MenuItemImage::create("button-start.png", "button-start.png",
-                                CC_CALLBACK_1(Curr_Class::OnPlayPressed, this));
+                                CC_CALLBACK_1(Curr_Class::onPlayPressed, this));
 
     RefPtr<MenuItemImage> exit = MenuItemImage::create("button-back.png", "button-back.png",
-                                CC_CALLBACK_1(Curr_Class::OnExitPressed, this));
+                                CC_CALLBACK_1(Curr_Class::onExitPressed, this));
 
     RefPtr<MenuItemImage> sound_On = MenuItemImage::create("music-on.png", 
                                         "music-off.png");
@@ -72,7 +79,7 @@ void MainMenuScene::AddMenu()
                                         "music-off.png");
 
     RefPtr<MenuItemToggle> toggle = MenuItemToggle::createWithTarget(this, 
-                                    menu_selector(Curr_Class::OnMusicPressed), 
+                                    menu_selector(Curr_Class::onMusicPressed), 
                                     sound_On.get(), sound_Off.get(), NULL);
 
     RefPtr<Menu> main_menu = Menu::create(play.get(), exit.get(),
@@ -89,20 +96,25 @@ void MainMenuScene::AddMenu()
     this->addChild(main_menu);
 }
 
-void MainMenuScene::OnPlayPressed(Ref* /**/)
+void MainMenuScene::addAudio()
+{
+    sAudioEngine->playBackgroundMusic("menu-theme.mp3", true);
+    sAudioEngine->setBackgroundMusicVolume(0.5f);
+}
+
+void MainMenuScene::onPlayPressed(Ref* /**/)
 {
     RefPtr<Scene> init_level = Entrance::createScene();
 
     sDirector->replaceScene(TransitionFlipAngular::create(2.f, init_level));
 }
 
-void MainMenuScene::OnExitPressed(Ref* /**/)
+void MainMenuScene::onExitPressed(Ref* /**/)
 {
     sDirector->end();
 }
 
-
-void MainMenuScene::OnMusicPressed(Ref* /**/)
+void MainMenuScene::onMusicPressed(Ref* /**/)
 {
     if (sAudioEngine->isBackgroundMusicPlaying())
         sAudioEngine->pauseBackgroundMusic();

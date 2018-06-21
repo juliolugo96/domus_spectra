@@ -17,14 +17,17 @@ class MainMenuScene : public Layer
         static Scene* createScene();
         bool init() override;
 
+        void onExit() override;
+
         using Curr_Class = MainMenuScene;
 
     private:
-        void OnPlayPressed(Ref* /**/);
-        void OnExitPressed(Ref * /**/);
-        void OnMusicPressed(Ref* /**/);
-        void AddMenu();
-        void AddBackground();
+        void onPlayPressed(Ref* /**/);
+        void onExitPressed(Ref * /**/);
+        void onMusicPressed(Ref* /**/);
+        void addMenu();
+        void addAudio();
+        void addBackground();
 };
 
 
