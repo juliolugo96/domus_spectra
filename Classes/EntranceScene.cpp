@@ -104,3 +104,8 @@ void Entrance::AddMedicalBox()
 
     this->addChild(box);
 }
+
+void Entrance::AddDoor()
+{
+    
+}
