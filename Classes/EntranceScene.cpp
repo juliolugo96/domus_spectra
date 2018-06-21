@@ -38,14 +38,12 @@ bool Entrance::init()
 
     scheduleUpdate();
 
-    this -> scheduleUpdate();
-
     return true;
 }
 
 void Entrance::update(float dt)
 {
-    auto c = this -> getChildren().back();
+    auto c = this -> getChildren().at(2);
     _shadowLayer->setLightPosition(c->getPosition());
     Layer::update(dt);
 
