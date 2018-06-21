@@ -359,14 +359,14 @@ Vec2 Player::getDestByOrientation(Orientation ori)
     {
         case Orientation::West:
         {
-            x = getPosition().x - getContentSize().width * 0.9f;
+            x = getPosition().x - getContentSize().width * 0.1f;
             y = getPosition().y;
             break;
         }
 
         case Orientation::East:
         {
-            x = getPosition().x + getContentSize().width * 0.9f; 
+            x = getPosition().x + getContentSize().width * 0.1f; 
             y = getPosition().y;
             break;
         }
@@ -374,14 +374,14 @@ Vec2 Player::getDestByOrientation(Orientation ori)
         case Orientation::North:
         {
             x = getPosition().x;
-            y = getPosition().y + getContentSize().height * 0.9f;
+            y = getPosition().y + getContentSize().height * 0.1f;
             break;
         }
 
         case Orientation::South:
         {
             x = getPosition().x;
-            y = getPosition().y - getContentSize().height * 0.9f;
+            y = getPosition().y - getContentSize().height * 0.1f;
             break;
         }
 

@@ -34,15 +34,6 @@ bool Entrance::init()
     AddMedicalBox();
     AddPlayer();
 
-    MessageBox("Welcome to the Murder House!", "Oh!");
-
-    {
-        if(1 == 1)
-        {
-            
-        }
-    }
-
     this -> scheduleUpdate();
 
     return true;

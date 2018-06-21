@@ -3208,16 +3208,6 @@ Boss.hpp
 SharedDefines.hpp
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/SharedDefines.hpp
 
-/home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.cpp
-HelloWorldScene.h
-/home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.h
-SimpleAudioEngine.h
-/home/ignisgravitas/AyDA/project/domus_spectra/Classes/SimpleAudioEngine.h
-
-/home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.h
-cocos2d.h
-/home/ignisgravitas/AyDA/project/domus_spectra/Classes/cocos2d.h
-
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/MainMenuScene.cpp
 MainMenuScene.hpp
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/MainMenuScene.hpp
@@ -3241,11 +3231,15 @@ Player.hpp
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Player.hpp
 FinalScene.hpp
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/FinalScene.hpp
+Objects.hpp
+/home/ignisgravitas/AyDA/project/domus_spectra/Classes/Objects.hpp
 
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Player.hpp
 SharedDefines.hpp
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/SharedDefines.hpp
 array.H
+-
+map
 -
 
 /home/ignisgravitas/AyDA/project/domus_spectra/Classes/ShadowLayer.cpp

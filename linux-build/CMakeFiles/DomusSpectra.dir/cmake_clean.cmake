@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o"
-  "CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o"
   "CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o"
   "CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o"
   "CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o"

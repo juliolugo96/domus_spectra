@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/Enemy.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o"
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/EntranceScene.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o"
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/FinalScene.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o"
-  "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o"
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/MainMenuScene.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o"
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/Objects.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o"
   "/home/ignisgravitas/AyDA/project/domus_spectra/Classes/Player.cpp" "/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o"

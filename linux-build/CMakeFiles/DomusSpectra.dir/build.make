@@ -81,33 +81,9 @@ CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o.provides: CMakeFiles/Domus
 CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o.provides.build: CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o
 
 
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o: ../Classes/HelloWorldScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.cpp
-
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.cpp > CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.i
-
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ignisgravitas/AyDA/project/domus_spectra/Classes/HelloWorldScene.cpp -o CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.s
-
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.requires:
-
-.PHONY : CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.requires
-
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.provides: CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.requires
-	$(MAKE) -f CMakeFiles/DomusSpectra.dir/build.make CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.provides.build
-.PHONY : CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.provides
-
-CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.provides.build: CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o
-
-
 CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o: ../Classes/MainMenuScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/MainMenuScene.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.i: cmake_force
@@ -131,7 +107,7 @@ CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o: ../Classes/EntranceScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/EntranceScene.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.i: cmake_force
@@ -155,7 +131,7 @@ CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o.provides.build: CMakeFil
 
 CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o: ../Classes/FinalScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/FinalScene.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.i: cmake_force
@@ -179,7 +155,7 @@ CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o: ../Classes/Player.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Player.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.i: cmake_force
@@ -203,7 +179,7 @@ CMakeFiles/DomusSpectra.dir/Classes/Player.cpp.o.provides.build: CMakeFiles/Domu
 
 CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o: ../Classes/Enemy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Enemy.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.i: cmake_force
@@ -227,7 +203,7 @@ CMakeFiles/DomusSpectra.dir/Classes/Enemy.cpp.o.provides.build: CMakeFiles/Domus
 
 CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o: ../Classes/Boss.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Boss.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.i: cmake_force
@@ -251,7 +227,7 @@ CMakeFiles/DomusSpectra.dir/Classes/Boss.cpp.o.provides.build: CMakeFiles/DomusS
 
 CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o: ../Classes/Objects.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/Objects.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.i: cmake_force
@@ -275,7 +251,7 @@ CMakeFiles/DomusSpectra.dir/Classes/Objects.cpp.o.provides.build: CMakeFiles/Dom
 
 CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o: ../Classes/ShadowLayer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/Classes/ShadowLayer.cpp
 
 CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.i: cmake_force
@@ -299,7 +275,7 @@ CMakeFiles/DomusSpectra.dir/Classes/ShadowLayer.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o: CMakeFiles/DomusSpectra.dir/flags.make
 CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o: ../proj.linux/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o -c /home/ignisgravitas/AyDA/project/domus_spectra/proj.linux/main.cpp
 
 CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.i: cmake_force
@@ -324,7 +300,6 @@ CMakeFiles/DomusSpectra.dir/proj.linux/main.cpp.o.provides.build: CMakeFiles/Dom
 # Object files for target DomusSpectra
 DomusSpectra_OBJECTS = \
 "CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o" \
-"CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o" \
 "CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o" \
 "CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o" \
 "CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o" \
@@ -339,7 +314,6 @@ DomusSpectra_OBJECTS = \
 DomusSpectra_EXTERNAL_OBJECTS =
 
 bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o
-bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o
 bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o
 bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o
 bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o
@@ -388,7 +362,7 @@ bin/Debug/DomusSpectra/DomusSpectra: ../cocos2d/external/bullet/prebuilt/linux/6
 bin/Debug/DomusSpectra/DomusSpectra: ../cocos2d/external/bullet/prebuilt/linux/64-bit/libMiniCL.a
 bin/Debug/DomusSpectra/DomusSpectra: lib/librecast.a
 bin/Debug/DomusSpectra/DomusSpectra: CMakeFiles/DomusSpectra.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable bin/Debug/DomusSpectra/DomusSpectra"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ignisgravitas/AyDA/project/domus_spectra/linux-build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable bin/Debug/DomusSpectra/DomusSpectra"
 	/usr/bin/cmake -E copy_directory /home/ignisgravitas/AyDA/project/domus_spectra/Resources /home/ignisgravitas/AyDA/project/domus_spectra/linux-build/bin/Debug/DomusSpectra/Resources
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DomusSpectra.dir/link.txt --verbose=$(VERBOSE)
 
@@ -398,7 +372,6 @@ CMakeFiles/DomusSpectra.dir/build: bin/Debug/DomusSpectra/DomusSpectra
 .PHONY : CMakeFiles/DomusSpectra.dir/build
 
 CMakeFiles/DomusSpectra.dir/requires: CMakeFiles/DomusSpectra.dir/Classes/AppDelegate.cpp.o.requires
-CMakeFiles/DomusSpectra.dir/requires: CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o.requires
 CMakeFiles/DomusSpectra.dir/requires: CMakeFiles/DomusSpectra.dir/Classes/MainMenuScene.cpp.o.requires
 CMakeFiles/DomusSpectra.dir/requires: CMakeFiles/DomusSpectra.dir/Classes/EntranceScene.cpp.o.requires
 CMakeFiles/DomusSpectra.dir/requires: CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.o.requires

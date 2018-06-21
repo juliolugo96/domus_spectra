@@ -336,33 +336,6 @@ Classes/FinalScene.cpp.s:
 	$(MAKE) -f CMakeFiles/DomusSpectra.dir/build.make CMakeFiles/DomusSpectra.dir/Classes/FinalScene.cpp.s
 .PHONY : Classes/FinalScene.cpp.s
 
-Classes/HelloWorldScene.o: Classes/HelloWorldScene.cpp.o
-
-.PHONY : Classes/HelloWorldScene.o
-
-# target to build an object file
-Classes/HelloWorldScene.cpp.o:
-	$(MAKE) -f CMakeFiles/DomusSpectra.dir/build.make CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.o
-.PHONY : Classes/HelloWorldScene.cpp.o
-
-Classes/HelloWorldScene.i: Classes/HelloWorldScene.cpp.i
-
-.PHONY : Classes/HelloWorldScene.i
-
-# target to preprocess a source file
-Classes/HelloWorldScene.cpp.i:
-	$(MAKE) -f CMakeFiles/DomusSpectra.dir/build.make CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.i
-.PHONY : Classes/HelloWorldScene.cpp.i
-
-Classes/HelloWorldScene.s: Classes/HelloWorldScene.cpp.s
-
-.PHONY : Classes/HelloWorldScene.s
-
-# target to generate assembly for a file
-Classes/HelloWorldScene.cpp.s:
-	$(MAKE) -f CMakeFiles/DomusSpectra.dir/build.make CMakeFiles/DomusSpectra.dir/Classes/HelloWorldScene.cpp.s
-.PHONY : Classes/HelloWorldScene.cpp.s
-
 Classes/MainMenuScene.o: Classes/MainMenuScene.cpp.o
 
 .PHONY : Classes/MainMenuScene.o
@@ -528,9 +501,6 @@ help:
 	@echo "... Classes/FinalScene.o"
 	@echo "... Classes/FinalScene.i"
 	@echo "... Classes/FinalScene.s"
-	@echo "... Classes/HelloWorldScene.o"
-	@echo "... Classes/HelloWorldScene.i"
-	@echo "... Classes/HelloWorldScene.s"
 	@echo "... Classes/MainMenuScene.o"
 	@echo "... Classes/MainMenuScene.i"
 	@echo "... Classes/MainMenuScene.s"
