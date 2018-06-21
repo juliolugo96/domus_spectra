@@ -4,6 +4,7 @@
 # include "cocos2d.h"
 # include "audio/include/SimpleAudioEngine.h"
 # include <iostream>
+# include "2d/CCLight.h"
 
 enum class Orientation
 {

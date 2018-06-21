@@ -34,7 +34,24 @@ bool Entrance::init()
     AddMedicalBox();
     AddPlayer();
 
+    MessageBox("Welcome to the Murder House!", "Oh!");
+
+    {
+        if(1 == 1)
+        {
+            
+        }
+    }
+
+    this -> scheduleUpdate();
+
     return true;
+}
+
+void Entrance::update(float dt)
+{
+      auto c = this -> getChildren().back();
+      _shadowLayer->setLightPosition(c->getPosition());
 }
 
 void Entrance::AddBackground()
@@ -51,6 +68,8 @@ void Entrance::AddBackground()
                             ScreenSize.height/2 + Origin.y };
 
     background->setPosition(CenterPos);
+    _shadowLayer = ShadowLayer::create();
+    background->addChild(_shadowLayer);
 
     this->addChild(background);
 }
@@ -68,9 +87,13 @@ void Entrance::AddPlayer()
     Vec2 const spritePos = { ScreenSize.width/2 + Origin.x, 
                             ScreenSize.height * 0.15f + Origin.y };
 
+    _shadowLayer->setLightPosition(spritePos);
+    _shadowLayer->setLightSize(0.7f + 100);
     player->setPosition(spritePos);
 
-    this->addChild(player);
+    this->addChild(player, 0);
+
+
 }
 
 void Entrance::AddMedicalBox()

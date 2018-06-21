@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 3.1)
 set(APP_NAME DomusSpectra)
 
 # DeSiGNAR Location
-set(DSG "/home/berti/libs/DeSiGNAR")
+set(DSG "/home/ignisgravitas/DeSiGNAR")
 
 project(${APP_NAME})
 
@@ -67,6 +67,7 @@ list(APPEND GAME_SOURCE
     Classes/Enemy.cpp
     Classes/Boss.cpp
     Classes/Objects.cpp
+    Classes/ShadowLayer.cpp
      )
 list(APPEND GAME_HEADER
       Classes/AppDelegate.h
@@ -79,6 +80,7 @@ list(APPEND GAME_HEADER
       Classes/Boss.hpp
       Classes/Objects.hpp
       Classes/SharedDefines.hpp
+      Classes/ShadowLayer.hpp
      )
 
 if(ANDROID)
