@@ -30,7 +30,8 @@ enum SpriteTags
     BULLET,
     AMMUNITION,
     ENEMY,
-    BOSS
+    BOSS,
+    LAYER
 };
 
 enum ActionTags

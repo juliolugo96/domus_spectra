@@ -70,6 +70,8 @@ bool Player::initWithSpriteFrame(SpriteFrame* frame)
     initKeyMoveArray();
     addPhysicShape();
 
+    setTag(SpriteTags::PLAYER);
+
     this->scheduleUpdate();
 
     return true;

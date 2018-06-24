@@ -2,11 +2,13 @@
 # define ENTRANCE_SCENE_HPP
 
 # include "SharedDefines.hpp"
+# include "RoomScene.hpp"
+# include "AreaTrigger.hpp"
 # include "ShadowLayer.hpp"
 
 using namespace cocos2d;
 
-class Entrance : public Layer
+class Entrance : public RoomScene
 {
     public:
         Entrance();
@@ -20,19 +22,12 @@ class Entrance : public Layer
 
         void update(float /**/) override;
     
-    private:
-        void addHealthBar();
-        void AddBackground();
-        void AddPlayer();
-        void AddMedicalBox();
-        void AddTriggerArea();
-        void AddBottonForUseDoor();
-        void HandleButton(bool /**/);
+    protected:
+        void addPlayer() override;
+        void addMedicalBoxes() override;
+        void addAreaTriggers() override;
 
-        Rect triggerArea;
-        bool isOnDoor;
-        RefPtr<ui::LoadingBar> healthBar;
-        RefPtr<ShadowLayer> shadowLayer;
+        RefPtr<AreaTrigger> areaTrigger;
 };
 
 # endif

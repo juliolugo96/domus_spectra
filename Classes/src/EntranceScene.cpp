@@ -3,7 +3,7 @@
 # include "Enemy.hpp"
 # include "Objects.hpp"
 
-Entrance::Entrance() : isOnDoor(false), shadowLayer(nullptr)
+Entrance::Entrance() : RoomScene("entrance.png")
 {}
 
 Entrance::~Entrance()
@@ -18,6 +18,8 @@ Scene* Entrance::createScene()
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
+    main_layer->setTag(SpriteTags::LAYER);
+    
     main_screen->addChild(main_layer);
 
     main_screen->setTag(SceneTags::Entrance);
@@ -30,11 +32,11 @@ bool Entrance::init()
     if (!Layer::init())
         return false;
 
-    AddBackground();
-    AddMedicalBox();
-    AddPlayer();
-    AddTriggerArea();
-    AddBottonForUseDoor();
+    addBackground();
+    addMedicalBoxes();
+    addPlayer();
+    addAreaTriggers();
+    addButtonForUseAreaTriggers();
     addHealthBar();
 
     scheduleUpdate();
@@ -54,42 +56,9 @@ void Entrance::update(float dt)
     
     if (healthBar != nullptr)
         healthBar->setPercent(float(sPlayer->getLife()));
-
-    if (triggerArea.containsPoint(sPlayer->getPosition())
-        && sPlayer->getOrientation() == Orientation::North)
-    {
-        HandleButton(true);
-        sPlayer->setOpenDoor(true);
-    }
-    else
-    {
-        sPlayer->setOpenDoor(false);
-        HandleButton(false);
-    }
 }
 
-void Entrance::AddBackground()
-{
-    RefPtr<Sprite> background = Sprite::create("entrance.png");
-
-    if (background == nullptr)
-        return;
-
-    Size const ScreenSize = sDirector->getVisibleSize();
-    Vec2 const Origin = sDirector->getVisibleOrigin();
-
-    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
-                            ScreenSize.height/2 + Origin.y };
-
-    shadowLayer = ShadowLayer::create();
-
-    background->setPosition(CenterPos);
-    background->addChild(shadowLayer);
-
-    this->addChild(background);
-}
-
-void Entrance::AddPlayer()
+void Entrance::addPlayer()
 {
     RefPtr<Player> player = sPlayer;
 
@@ -110,7 +79,7 @@ void Entrance::AddPlayer()
     this->addChild(player);
 }
 
-void Entrance::AddMedicalBox()
+void Entrance::addMedicalBoxes()
 {
     RefPtr<Sprite> box = MedicalBox::create();
 
@@ -128,7 +97,7 @@ void Entrance::AddMedicalBox()
     this->addChild(box);
 }
 
-void Entrance::AddTriggerArea()
+void Entrance::addAreaTriggers()
 {   
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
@@ -136,78 +105,27 @@ void Entrance::AddTriggerArea()
     Vec2 const pos = { ScreenSize.width * 0.495f + Origin.x, 
                             ScreenSize.height * 0.845f + Origin.y };
     
-    triggerArea = Rect(pos.x, pos.y, 100.f, 100.f);
-}
+    areaTrigger = AreaTrigger::create();
 
-void Entrance::AddBottonForUseDoor()
-{
-    RefPtr<DrawNode> button = DrawNode::create();
-    RefPtr<Label> label = Label::createWithTTF("Open Door", "fonts/Marker Felt.ttf", 18);
+    areaTrigger->setRect(pos, 100.f, 100.f);
 
-    if (button == nullptr || label == nullptr)
-        return;
-
-    Size const ScreenSize = sDirector->getVisibleSize();
-    Vec2 const Origin = sDirector->getVisibleOrigin();
-
-    Vec2 pos = { ScreenSize.width * 0.95f + Origin.x, 
-                            ScreenSize.height * 0.125f + Origin.y };
-    
-    button->drawDot(pos, 10.f, Color4F::RED);
-    button->setVisible(false);
-    button->setTag(100);
-
-    pos = { ScreenSize.width * 0.95f + Origin.x, 
-            ScreenSize.height * 0.10f + Origin.y };
-
-
-    label->setPosition(pos);
-    label->setVisible(false);
-    label->setTag(101);
-
-    addChild(label);
-    addChild(button);
-}
-
-void Entrance::addHealthBar()
-{
-  healthBar = ui::LoadingBar::create("playerHpBar.png", 100.f);
-  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("healthBarBehind.png", 100.f);
-
-  Size const ScreenSize = sDirector->getVisibleSize();
-  Vec2 const Origin = sDirector->getVisibleOrigin();
-
-  Vec2 const barPos = { ScreenSize.width * 0.15f + Origin.x, 
-                          Origin.y + ScreenSize.height * 0.95f};
-
-  healthBar->setPosition(barPos);
-  healthBarBehind->setPosition(barPos);
-
-  addChild(healthBar, 1);
-  addChild(healthBarBehind, 0);
-}
-
-void Entrance::HandleButton(bool enable)
-{
-    Node* button = getChildByTag(100);
-    Node* label = getChildByTag(101);
-
-    if (button == nullptr || label == nullptr)
-        return;
-
-    if (isOnDoor == enable)
-        return;
+    areaTrigger->setOnObjectEnter(([this] (Node*& object) -> void
+    {
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
         
-    isOnDoor = enable;
+        sPlayer->setOpenDoor(true);
+        this->handleButton(true);
+    }));
 
-    if (!button->isVisible() && enable)
+    areaTrigger->setOnObjectExit(([this] (Node*& object) -> void
     {
-        button->setVisible(true);
-        label->setVisible(true);
-    }
-    else
-    {
-        button->setVisible(false);
-        label->setVisible(false);
-    }
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+        
+        sPlayer->setOpenDoor(false);
+        this->handleButton(false);
+    }));
+
+    this->addChild(areaTrigger);
 }

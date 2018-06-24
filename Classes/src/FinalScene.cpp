@@ -10,6 +10,8 @@ Scene* FinalScene::createScene()
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
+    main_layer->setTag(SpriteTags::LAYER);
+    
     main_screen->addChild(main_layer);
 
     main_screen->setTag(SceneTags::FinalStage);
