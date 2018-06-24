@@ -131,7 +131,7 @@ void Entrance::AddTriggerArea()
     Vec2 const pos = { ScreenSize.width * 0.495f + Origin.x, 
                             ScreenSize.height * 0.845f + Origin.y };
     
-    triggerArea = Rect(pos.x, pos.y, 20.f, 20.f);
+    triggerArea = Rect(pos.x, pos.y, 100.f, 100.f);
 }
 
 void Entrance::AddBottonForUseDoor()
