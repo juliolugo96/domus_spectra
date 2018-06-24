@@ -23,6 +23,7 @@ enum SceneTags
     HallRight,
     HallLeft,
     Aisle,
+    Quiz,
     FinalStage,
 };
 
