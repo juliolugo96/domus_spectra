@@ -54,6 +54,7 @@ endif()
 include_directories(
         Classes/include
         ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
+        ${COCOS2DX_ROOT_PATH}/cocos/ui/
         ${DSG}/include
 )
 # add cross-platforms source files and header files
