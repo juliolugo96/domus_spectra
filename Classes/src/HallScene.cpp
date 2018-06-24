@@ -1,6 +1,6 @@
 # include "HallScene.hpp"
 
-HallScene::HallScene() : lastAreaVisited(nullptr)
+HallScene::HallScene() : RoomScene("hall-front.png")
 {
 
 }
@@ -19,6 +19,8 @@ Scene* HallScene::createScene()
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
+    main_layer->setTag(SpriteTags::LAYER);
+
     main_screen->addChild(main_layer);
 
     main_screen->setTag(SceneTags::Hall);
@@ -33,22 +35,13 @@ bool HallScene::init()
 
     addBackground();
     addPlayer();
-    addButtonForUseEntrance();
+    addButtonForUseAreaTriggers();
     addAreaTriggers();
     addHealthBar();
 
     scheduleUpdate();
 
     return true;
-}
-
-bool HallScene::isOnLastArea() const
-{
-    if (lastAreaVisited == nullptr)
-        return false;
-
-    return lastAreaVisited->first.containsPoint(sPlayer->getPosition()) && 
-            lastAreaVisited->second == sPlayer->getOrientation();
 }
 
 void HallScene::update(float dt)
@@ -60,47 +53,6 @@ void HallScene::update(float dt)
 
     if (healthBar != nullptr)
       healthBar->setPercent(sPlayer->getLife());
-
-    for (auto & it : areaTriggers)
-    {
-        if (it.first.containsPoint(sPlayer->getPosition()) && 
-            it.second == sPlayer->getOrientation())
-        {
-            lastAreaVisited = &it;
-            sPlayer->setOpenDoor(true);
-            handleButton(true);
-        }
-        else
-        {
-            if (isOnLastArea())
-                break;
-            
-            lastAreaVisited = nullptr;
-            sPlayer->setOpenDoor(false);
-            handleButton(false);
-        }
-    }
-}
-
-void HallScene::addBackground()
-{
-    RefPtr<Sprite> background = Sprite::create("hall-front.png");
-
-    shadowLayer = ShadowLayer::create();
-
-    if (background == nullptr || shadowLayer == nullptr)
-        return;
-    
-    Size const ScreenSize = sDirector->getVisibleSize();
-    Vec2 const Origin = sDirector->getVisibleOrigin();
-
-    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
-                            ScreenSize.height/2 + Origin.y };
-
-    background->setPosition(CenterPos);
-    background->addChild(shadowLayer);
-
-    this->addChild(background);
 }
 
 void HallScene::addPlayer()
@@ -133,27 +85,6 @@ void HallScene::addPlayer()
     this->addChild(player);
 }
 
-void HallScene::addHealthBar()
-{
-  healthBar = ui::LoadingBar::create("playerHpBar.png", 100.f);
-  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("healthBarBehind.png", 100.f);
-
-  Size const ScreenSize = sDirector->getVisibleSize();
-  Vec2 const Origin = sDirector->getVisibleOrigin();
-
-  Vec2 const barPos = { ScreenSize.width * 0.15f + Origin.x, 
-                          Origin.y + ScreenSize.height * 0.95f};
-
-  healthBar->setPosition(barPos);
-  healthBarBehind->setPosition(barPos);
-
-  addChild(healthBar, 1);
-  addChild(healthBarBehind, 0);
-}
-
-void HallScene::addAmmunition()
-{}
-
 void HallScene::addMedicalBoxes()
 {}
 
@@ -165,70 +96,65 @@ void HallScene::addAreaTriggers()
     float width = ScreenSize.width;
     float height = ScreenSize.height;
 
-    DynArray<std::pair<Vec2, Orientation>> centerOfAreas = 
+    using AtInfo = std::pair<Vec2, Orientation>;
+
+    DynArray<AtInfo> centerOfAreas = 
     {
-        { Vec2(width * 0.95f + Origin.x, height * 0.36f + Origin.y), Orientation::East },
-        { Vec2(width * 0.05f + Origin.x, height * 0.36f + Origin.y), Orientation::West },
-        { Vec2(width * 0.48f + Origin.x, height * 0.95f + Origin.y), Orientation::North},
+        AtInfo(Vec2(width * 0.90f + Origin.x, height * 0.36f + Origin.y), Orientation::East),
+        AtInfo(Vec2(width * 0.05f + Origin.x, height * 0.36f + Origin.y), Orientation::West),
+        AtInfo(Vec2(width * 0.48f + Origin.x, height * 0.95f + Origin.y), Orientation::North)
     };
 
     for (auto & it : centerOfAreas)
     {
-        Rect rect(it.first.x, it.first.y, 100.f, 100.f);
-        areaTriggers.append(AreaTrigger(rect, it.second));
+        RefPtr<AreaTrigger> at = AreaTrigger::create();
+
+        at->setPosition(it.first);
+        at->setRect(it.first, 50.f, 50.f);
+        at->setOrientation(it.second);
+
+        areaTriggers.append(at);
     }
 
     auto lastPos = centerOfAreas.get_last().first;
 
-    areaTriggers.get_last().first = Rect(lastPos.x, lastPos.y, 100.f, 100.f);
-}
+    areaTriggers.get_last()->setRect(lastPos, 50.f, 25.f);
 
-void HallScene::addButtonForUseEntrance()
-{
-    RefPtr<DrawNode> button = DrawNode::create();
-    RefPtr<Label> label = Label::createWithTTF("Go to the Room", "fonts/Marker Felt.ttf", 18);
-
-    if (button == nullptr || label == nullptr)
-        return;
-
-    Size const ScreenSize = sDirector->getVisibleSize();
-    Vec2 const Origin = sDirector->getVisibleOrigin();
-
-    Vec2 pos = { ScreenSize.width * 0.95f + Origin.x, 
-                            ScreenSize.height * 0.125f + Origin.y };
-    
-    button->drawDot(pos, 10.f, Color4F::RED);
-    button->setVisible(false);
-    button->setTag(100);
-
-    pos = { ScreenSize.width * 0.95f + Origin.x, 
-            ScreenSize.height * 0.10f + Origin.y };
-
-
-    label->setPosition(pos);
-    label->setVisible(false);
-    label->setTag(101);
-
-    addChild(label);
-    addChild(button);
-}
-
-void HallScene::handleButton(bool enable)
-{
-    Node* button = getChildByTag(100);
-    Node* label = getChildByTag(101);
-
-    if (button == nullptr || label == nullptr)
-        return;
-
-    if (!button->isVisible() && enable)
+    for (RefPtr<AreaTrigger> & at : areaTriggers)
     {
-        button->setVisible(true);
-        label->setVisible(true);
-    }
-    else
-    {
-        button->setVisible(false);
-        label->setVisible(false);
+        at->setOnObjectEnter(([this, &at] (Node*& object) -> void
+        {
+            if (object->getTag() != SpriteTags::PLAYER)
+                return;
+            
+            sPlayer->setOpenDoor(true);
+            this->handleButton(true);
+        }));
+
+        at->setOnObjectExit(([this] (Node*& object) -> void
+        {
+            if (object->getTag() != SpriteTags::PLAYER)
+                return;
+            
+            sPlayer->setOpenDoor(false);
+            this->handleButton(false);
+        }));
+
+        at->setOnCheckObject(([this, &at] (Node*& object, bool & isInside) -> void
+        {
+            if (object->getTag() != SpriteTags::PLAYER)
+                return;
+            
+            if (!isInside)
+                return;
+
+            if (at->hasOrientation() && 
+                at->getOrientation() != sPlayer->getOrientation())
+                isInside = false;
+            else
+                isInside = true;
+        }));
+
+        this->addChild(at.get());
     }
 }

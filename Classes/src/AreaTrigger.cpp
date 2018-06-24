@@ -1,6 +1,6 @@
 # include "AreaTrigger.hpp"
 
-AreaTrigger::AreaTrigger() : Node()
+AreaTrigger::AreaTrigger() : Node(), orientation(Orientation::Null)
 {
 
 }
@@ -12,7 +12,9 @@ AreaTrigger::~AreaTrigger()
 
 void AreaTrigger::setRect(Vec2 const & pos, float width, float height)
 {
-    rectArea = Rect(pos.x, pos.y, width, height);
+    Rect rect(0, 0, width, height);
+    
+    rectArea = RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 
     scheduleUpdate();
 }
@@ -27,6 +29,11 @@ void AreaTrigger::setOnObjectExit(std::function<void(Node*& /**/)> const & func)
     onObjectExit = func;
 }
 
+void AreaTrigger::setOnCheckObject(std::function<void(Node*& /**/, bool &)> const & func)
+{
+    onCheckObject = func;
+}
+
 void AreaTrigger::update(float dt)
 {
     Node::update(dt);
@@ -36,17 +43,21 @@ void AreaTrigger::update(float dt)
     if (layer == nullptr || layer->getTag() != SpriteTags::LAYER)
         return;
 
-    
     for (Node*& child : layer->getChildren())
     {
-        if (rectArea.containsPoint(child->getPosition()))
+        bool inside = isInside(child);
+
+        if (onCheckObject != nullptr)
+            onCheckObject(child, inside);
+
+        if (inside)
         {
             if (insideObjects.find(child) == insideObjects.end())
             {
-                insideObjects.insert(child);
-                
                 if (onObjectEnter != nullptr)
                     onObjectEnter(child);
+
+                insideObjects.insert(child);
             }
         }
         else if (insideObjects.find(child) != insideObjects.end())

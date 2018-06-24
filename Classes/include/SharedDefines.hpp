@@ -13,6 +13,7 @@ enum class Orientation
     South,
     West,
     East,
+    Null,
 };
 
 enum SceneTags

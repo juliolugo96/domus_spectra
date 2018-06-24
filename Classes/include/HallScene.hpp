@@ -3,14 +3,12 @@
 
 # include "SharedDefines.hpp"
 # include "Objects.hpp"
-# include "ShadowLayer.hpp"
+# include "RoomScene.hpp"
 # include <array.H>
 
 using namespace cocos2d;
 
-using AreaTrigger = std::pair<Rect, Orientation>;
-
-class HallScene : public Layer
+class HallScene : public RoomScene
 {
     public:
         HallScene();
@@ -25,22 +23,11 @@ class HallScene : public Layer
 
     private:
 
-        bool isOnLastArea() const;
+        void addPlayer() override;
+        void addMedicalBoxes() override;
+        void addAreaTriggers() override;
 
-        void addBackground();
-        void addPlayer();
-        void addMedicalBoxes();
-        void addAmmunition();
-        void addHealthBar();
-        void addAreaTriggers();
-        void addButtonForUseEntrance();
-
-        void handleButton(bool /**/);
-
-        DynArray<AreaTrigger> areaTriggers;
-        RefPtr<ShadowLayer> shadowLayer;
-        RefPtr<ui::LoadingBar> healthBar;
-        AreaTrigger* lastAreaVisited;
+        DynArray<RefPtr<AreaTrigger>> areaTriggers;
 };
 
 # endif

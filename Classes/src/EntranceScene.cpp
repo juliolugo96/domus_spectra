@@ -107,13 +107,15 @@ void Entrance::addAreaTriggers()
     
     areaTrigger = AreaTrigger::create();
 
-    areaTrigger->setRect(pos, 100.f, 100.f);
+    areaTrigger->setPosition(pos);
+    areaTrigger->setRect(pos, 20.f, 20.f);
+    areaTrigger->setOrientation(Orientation::North);
 
     areaTrigger->setOnObjectEnter(([this] (Node*& object) -> void
     {
         if (object->getTag() != SpriteTags::PLAYER)
             return;
-        
+
         sPlayer->setOpenDoor(true);
         this->handleButton(true);
     }));
@@ -125,6 +127,21 @@ void Entrance::addAreaTriggers()
         
         sPlayer->setOpenDoor(false);
         this->handleButton(false);
+    }));
+
+    areaTrigger->setOnCheckObject(([this] (Node*& object, bool & isInside) -> void
+    {
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        if (!isInside)
+            return;    
+        
+        if (areaTrigger->hasOrientation() && 
+            areaTrigger->getOrientation() != sPlayer->getOrientation())
+            isInside = false;
+        else
+            isInside = true;
     }));
 
     this->addChild(areaTrigger);
