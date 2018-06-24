@@ -19,7 +19,6 @@ class HallScene : public RoomScene
         static Scene* createScene();
 
         bool init() override;
-        void update(float /**/) override;
 
     private:
 

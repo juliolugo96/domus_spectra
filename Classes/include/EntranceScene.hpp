@@ -20,8 +20,6 @@ class Entrance : public RoomScene
         using Curr_Class = Entrance;
         bool init() override;
 
-        void update(float /**/) override;
-    
     protected:
         void addPlayer() override;
         void addMedicalBoxes() override;

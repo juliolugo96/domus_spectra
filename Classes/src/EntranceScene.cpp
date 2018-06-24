@@ -44,20 +44,6 @@ bool Entrance::init()
     return true;
 }
 
-void Entrance::update(float dt)
-{
-    Layer::update(dt);
-
-    if (sPlayer == nullptr)
-        return;
-
-    if (shadowLayer != nullptr)
-        shadowLayer->setLightPosition(sPlayer->getPosition());
-    
-    if (healthBar != nullptr)
-        healthBar->setPercent(float(sPlayer->getLife()));
-}
-
 void Entrance::addPlayer()
 {
     RefPtr<Player> player = sPlayer;

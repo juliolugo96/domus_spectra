@@ -94,3 +94,17 @@ void RoomScene::addHealthBar()
   addChild(healthBar, 1);
   addChild(healthBarBehind, 0);
 }
+
+void RoomScene::update(float dt)
+{
+    Layer::update(dt);
+
+    if (sPlayer == nullptr)
+        return;
+
+    if (shadowLayer != nullptr)
+        shadowLayer->setLightPosition(sPlayer->getPosition());
+    
+    if (healthBar != nullptr)
+        healthBar->setPercent(float(sPlayer->getLife()));
+}

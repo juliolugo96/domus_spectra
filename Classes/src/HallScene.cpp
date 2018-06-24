@@ -44,17 +44,6 @@ bool HallScene::init()
     return true;
 }
 
-void HallScene::update(float dt)
-{
-    Layer::update(dt);
-
-    if (shadowLayer != nullptr)
-        shadowLayer->setLightPosition(sPlayer->getPosition());
-
-    if (healthBar != nullptr)
-      healthBar->setPercent(sPlayer->getLife());
-}
-
 void HallScene::addPlayer()
 {
     RefPtr<Player> player = sPlayer;

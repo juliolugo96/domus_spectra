@@ -37,6 +37,8 @@ bool HallLeftScene::init()
     addAreaTriggers();
     addHealthBar();
 
+    scheduleUpdate();
+
     return true;
 }
 
@@ -56,7 +58,7 @@ void HallLeftScene::addPlayer()
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
-    Vec2 const playerPos = { ScreenSize.width * 1.05f + Origin.x, 
+    Vec2 const playerPos = { ScreenSize.width * 1.15f + Origin.x, 
                             ScreenSize.height * 0.5f + Origin.y};
 
     player->setPosition(playerPos);

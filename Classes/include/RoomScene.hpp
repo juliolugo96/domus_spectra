@@ -13,6 +13,8 @@ class RoomScene : public Layer
         RoomScene(const std::string & bgName) : backgroundName(bgName) {}
         ~RoomScene() {};
 
+        void update(float dt) override;
+
     protected:
         void addHealthBar();
         void addBackground();
