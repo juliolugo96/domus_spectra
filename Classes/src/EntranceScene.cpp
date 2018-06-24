@@ -50,6 +50,8 @@ void Entrance::update(float dt)
 
     shadowLayer->setLightPosition(sPlayer->getPosition());
 
+    healthBar->setPercent(float(sPlayer->getLife()));
+
     if (triggerArea.containsPoint(sPlayer->getPosition())
         && sPlayer->getOrientation() == Orientation::North)
     {
@@ -162,6 +164,24 @@ void Entrance::AddBottonForUseDoor()
 
     addChild(label);
     addChild(button);
+}
+
+void Entrance::addHealthBar()
+{
+  healthBar = ui::LoadingBar::create("", 100.f);
+  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("", 100.f);
+
+  Size const ScreenSize = sDirector->getVisibleSize();
+  Vec2 const Origin = sDirector->getVisibleOrigin();
+
+  Vec2 const barPos = { ScreenSize.width * 0.125f + Origin.x, 
+                          Origin.y + ScreenSize.height * 0.95f};
+
+  healthBar->setPosition(barPos);
+  healthBarBehind->setPosition(barPos);
+
+  addChild(healthBar);
+  addChild(healthBarBehind);
 }
 
 void Entrance::HandleButton(bool enable)

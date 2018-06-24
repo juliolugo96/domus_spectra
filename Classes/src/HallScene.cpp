@@ -35,6 +35,7 @@ bool HallScene::init()
     addPlayer();
     addButtonForUseEntrance();
     addAreaTriggers();
+    addHealthBar();
 
     scheduleUpdate();
 
@@ -53,6 +54,12 @@ bool HallScene::isOnLastArea() const
 void HallScene::update(float dt)
 {
     Layer::update(dt);
+
+    if (shadowLayer != nullptr)
+        shadowLayer->setLightPosition(sPlayer->getPosition());
+
+    if (healthBar != nullptr)
+      healthBar->setPercent(sPlayer->getLife());
 
     for (auto & it : areaTriggers)
     {
@@ -77,9 +84,11 @@ void HallScene::update(float dt)
 
 void HallScene::addBackground()
 {
-    Sprite* background = Sprite::create("hall-front.png");
+    RefPtr<Sprite> background = Sprite::create("hall-front.png");
 
-    if (background == nullptr)
+    shadowLayer = ShadowLayer::create();
+
+    if (background == nullptr || shadowLayer == nullptr)
         return;
     
     Size const ScreenSize = sDirector->getVisibleSize();
@@ -89,6 +98,7 @@ void HallScene::addBackground()
                             ScreenSize.height/2 + Origin.y };
 
     background->setPosition(CenterPos);
+    background->addChild(shadowLayer);
 
     this->addChild(background);
 }
@@ -114,7 +124,31 @@ void HallScene::addPlayer()
 
     player->setPosition(initPos);
 
+    if (shadowLayer != nullptr)
+    {
+      shadowLayer->setLightPosition(initPos);
+      shadowLayer->setLightSize(0.7f + 100.f);
+    }
+
     this->addChild(player);
+}
+
+void HallScene::addHealthBar()
+{
+  healthBar = ui::LoadingBar::create("", 100.f);
+  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("", 100.f);
+
+  Size const ScreenSize = sDirector->getVisibleSize();
+  Vec2 const Origin = sDirector->getVisibleOrigin();
+
+  Vec2 const barPos = { ScreenSize.width * 0.125f + Origin.x, 
+                          Origin.y + ScreenSize.height * 0.95f};
+
+  healthBar->setPosition(barPos);
+  healthBarBehind->setPosition(barPos);
+
+  addChild(healthBar);
+  addChild(healthBarBehind);
 }
 
 void HallScene::addAmmunition()

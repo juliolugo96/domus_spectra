@@ -3,6 +3,7 @@
 
 # include "SharedDefines.hpp"
 # include "Objects.hpp"
+# include "ShadowLayer.hpp"
 # include <array.H>
 
 using namespace cocos2d;
@@ -30,12 +31,15 @@ class HallScene : public Layer
         void addPlayer();
         void addMedicalBoxes();
         void addAmmunition();
+        void addHealthBar();
         void addAreaTriggers();
         void addButtonForUseEntrance();
 
         void handleButton(bool /**/);
 
         DynArray<AreaTrigger> areaTriggers;
+        RefPtr<ShadowLayer> shadowLayer;
+        RefPtr<ui::LoadingBar> healthBar;
         AreaTrigger* lastAreaVisited;
 };
 

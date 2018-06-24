@@ -21,6 +21,7 @@ class Entrance : public Layer
         void update(float /**/) override;
     
     private:
+        void addHealthBar();
         void AddBackground();
         void AddPlayer();
         void AddMedicalBox();
@@ -30,6 +31,7 @@ class Entrance : public Layer
 
         Rect triggerArea;
         bool isOnDoor;
+        RefPtr<ui::LoadingBar> healthBar;
         RefPtr<ShadowLayer> shadowLayer;
 };
 

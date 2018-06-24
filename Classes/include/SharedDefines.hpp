@@ -5,6 +5,7 @@
 # include "audio/include/SimpleAudioEngine.h"
 # include <iostream>
 # include "2d/CCLight.h"
+# include "CocosGUI.h"
 
 enum class Orientation
 {
@@ -92,6 +93,5 @@ static cocos2d::Vec2 getPositionAwayFrom(cocos2d::Node& src, Orientation ori)
 
     return ret;
 }
-
 
 # endif

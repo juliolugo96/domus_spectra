@@ -54,7 +54,6 @@ Player* Player::create()
     return nullptr;
 }
 
-
 bool Player::initWithSpriteFrame(SpriteFrame* frame)
 {
     if (!Sprite::initWithSpriteFrame(frame))
@@ -280,6 +279,8 @@ Animation* Player::getShootAnimation(Orientation ori)
 
 void Player::shoot()
 {
+    this->modHp(-1);
+    
     Bullet* bullet = Bullet::create();
 
     if (bullet == nullptr)  
