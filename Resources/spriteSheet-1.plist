@@ -15,7 +15,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1024,768}</string>
                 <key>textureRect</key>
-                <string>{{1024,0},{1024,768}}</string>
+                <string>{{1,1},{1024,768}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -30,22 +30,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1000,1000}</string>
                 <key>textureRect</key>
-                <string>{{1024,768},{1000,1000}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>menu-background.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{1024,770}</string>
-                <key>spriteSourceSize</key>
-                <string>{1024,770}</string>
-                <key>textureRect</key>
-                <string>{{0,768},{1024,770}}</string>
+                <string>{{1027,1},{1000,1000}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -60,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{1024,512}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{1024,512}}</string>
+                <string>{{1,771},{1024,512}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -76,9 +61,9 @@
             <key>realTextureFileName</key>
             <string>spriteSheet-1.png</string>
             <key>size</key>
-            <string>{2048,1768}</string>
+            <string>{2028,1284}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6dd9ae2a788d7ee635e6fe1c1387ad96:93a85ce2903d39ed12b699e0daaf6da0:3cb326787b2b4abc17c281ea5f019164$</string>
+            <string>$TexturePacker:SmartUpdate:a7ef2c53948fcb8a548ba5fa5fd0c801:7074bc7cb952e2360e23adce315bb32f:9a74ee72b1a3ba2488dd464c8a38ea45$</string>
             <key>textureFileName</key>
             <string>spriteSheet-1.png</string>
         </dict>

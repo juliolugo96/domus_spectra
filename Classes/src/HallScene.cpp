@@ -135,20 +135,20 @@ void HallScene::addPlayer()
 
 void HallScene::addHealthBar()
 {
-  healthBar = ui::LoadingBar::create("", 100.f);
-  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("", 100.f);
+  healthBar = ui::LoadingBar::create("playerHpBar.png", 100.f);
+  RefPtr<ui::LoadingBar> healthBarBehind = ui::LoadingBar::create("healthBarBehind.png", 100.f);
 
   Size const ScreenSize = sDirector->getVisibleSize();
   Vec2 const Origin = sDirector->getVisibleOrigin();
 
-  Vec2 const barPos = { ScreenSize.width * 0.125f + Origin.x, 
+  Vec2 const barPos = { ScreenSize.width * 0.15f + Origin.x, 
                           Origin.y + ScreenSize.height * 0.95f};
 
   healthBar->setPosition(barPos);
   healthBarBehind->setPosition(barPos);
 
-  addChild(healthBar);
-  addChild(healthBarBehind);
+  addChild(healthBar, 1);
+  addChild(healthBarBehind, 0);
 }
 
 void HallScene::addAmmunition()
@@ -174,13 +174,13 @@ void HallScene::addAreaTriggers()
 
     for (auto & it : centerOfAreas)
     {
-        Rect rect(it.first.x, it.first.y, 30.f, 100.f);
+        Rect rect(it.first.x, it.first.y, 100.f, 100.f);
         areaTriggers.append(AreaTrigger(rect, it.second));
     }
 
     auto lastPos = centerOfAreas.get_last().first;
 
-    areaTriggers.get_last().first = Rect(lastPos.x, lastPos.y, 20.f, 20.f);
+    areaTriggers.get_last().first = Rect(lastPos.x, lastPos.y, 100.f, 100.f);
 }
 
 void HallScene::addButtonForUseEntrance()

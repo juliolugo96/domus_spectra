@@ -132,6 +132,7 @@ void AppDelegate::AddSearchPaths()
         std::string("res/characters"),
         std::string("res/characters/boss"),
         std::string("res/characters/main_character"),
+        std::string("res/characters/health_bar"),
         std::string("res/scenarios"),
         std::string("res/shaders"),
         std::string("audio")
@@ -140,5 +141,4 @@ void AppDelegate::AddSearchPaths()
     sFileUtils->setSearchPaths(resourcesPath);
     sSpriteCache->addSpriteFramesWithFile("spriteSheet-0.plist");
     sSpriteCache->addSpriteFramesWithFile("spriteSheet-1.plist");
-    sSpriteCache->addSpriteFramesWithFile("spriteSheet-2.plist");
 }
