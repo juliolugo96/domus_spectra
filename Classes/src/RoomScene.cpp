@@ -16,7 +16,7 @@ void RoomScene::addBackground()
     shadowLayer = ShadowLayer::create();
 
     background->setPosition(CenterPos);
-    background->addChild(shadowLayer);
+    //background->addChild(shadowLayer);
 
     this->addChild(background);
 }

@@ -54,6 +54,7 @@ class Player : public Sprite
 
         void addPhysicShape();
         void initKeyMoveArray();
+        void setStandSpriteFrame();
         
         Animation* getWalkAnimation(Orientation /**/);
         Animation* getShootAnimation(Orientation /**/);

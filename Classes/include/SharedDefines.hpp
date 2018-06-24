@@ -20,6 +20,8 @@ enum SceneTags
 {
     Entrance = 10,
     Hall,
+    HallRight,
+    HallLeft,
     Aisle,
     FinalStage,
 };

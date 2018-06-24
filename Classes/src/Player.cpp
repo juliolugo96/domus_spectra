@@ -2,6 +2,7 @@
 # include "FinalScene.hpp"
 # include "AisleScene.hpp"
 # include "HallScene.hpp"
+# include "HallLeftScene.hpp"
 # include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
@@ -104,7 +105,9 @@ void Player::update(float dt)
 
     if (isDead)
     {
+        setSpriteFrame("main_character/pcDead.png");
         stopAllActions();
+        keyMovement.clear();
         return;        
     }
 
@@ -126,14 +129,9 @@ void Player::modHp(int8 const value)
 void Player::dead()
 {
     isDead = true;
-
-    SpriteFrame* deadSprite = sSpriteCache->
-                            getSpriteFrameByName("main_character/pcDead.png");
-
-    if (deadSprite == nullptr)
-        return;
-
-    setDisplayFrame(deadSprite);
+    stopAllActions();
+    
+    setSpriteFrame("main_character/pcDead.png");
 
     sAudioEngine->playEffect("dead-effect.mp3", false, 1.f, 1.f);
 }
@@ -199,6 +197,11 @@ Animation* Player::getWalkAnimation(Orientation ori)
         default : return nullptr;
     }
 
+    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(stand.c_str());
+
+    if (frame != nullptr)
+        anim->addSpriteFrame(frame);
+
     for (int8 i = 1; i < 3; ++i)
     {
         String* path = String::createWithFormat(walk.c_str(), i);
@@ -208,15 +211,49 @@ Animation* Player::getWalkAnimation(Orientation ori)
             anim->addSpriteFrame(frame);
     }
 
-    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(stand.c_str());
-
-    if (frame != nullptr)
-        anim->addSpriteFrame(frame);
-
     anim->setDelayPerUnit(1.f/10.f);
     anim->setRestoreOriginalFrame(true);
 
     return anim;
+}
+
+void Player::setStandSpriteFrame()
+{
+    std::string stand("main_character/pcE.png");
+
+    switch (getOrientation())
+    {
+        case Orientation::West:
+        {
+            stand[17] = 'W';
+            break;
+        }
+
+        case Orientation::South:
+        {
+            stand[17] = 'S';
+            break;
+        }
+        
+        case Orientation::North:
+        {
+            stand[17] = 'N';
+            break;
+        }
+
+        case Orientation::East:
+        {
+            stand[17] = 'E';
+            break;
+        }
+
+        default : return;
+    }
+
+    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName(stand.c_str());
+
+    if (frame != nullptr)
+        setSpriteFrame(frame);
 }
 
 Animation* Player::getShootAnimation(Orientation ori)
@@ -281,8 +318,6 @@ Animation* Player::getShootAnimation(Orientation ori)
 
 void Player::shoot()
 {
-    this->modHp(-1);
-    
     Bullet* bullet = Bullet::create();
 
     if (bullet == nullptr)  
@@ -320,6 +355,9 @@ void Player::onEnter()
     Vec2 const Origin = sDirector->getVisibleOrigin();
     Size const & ScreenSize = sDirector->getVisibleSize();
 
+    Vec2 tgt;
+    Orientation next_ori;
+
     setEnterInScene(true);
 
     switch (curr_scene->getTag())
@@ -327,24 +365,24 @@ void Player::onEnter()
         case SceneTags::Entrance:
         {
             setEnterInScene(false);
-            break;
+            return;
         }
 
         case SceneTags::Hall:
         {
-            Vec2 const tgt = { ScreenSize.width/2 + Origin.x, 
+            next_ori= Orientation::North;
+
+            tgt = { ScreenSize.width/2 + Origin.x, 
                             ScreenSize.height * 0.15f + Origin.y };
-            
-            MoveTo* move = MoveTo::create(1.25f, tgt);
+            break;
+        }
 
-            DelayTime* delay = DelayTime::create(1.5f);
+        case SceneTags::HallLeft:
+        {
+            next_ori = Orientation::West;
 
-            CallFunc* onMoveFinish = CallFuncN::create(CC_CALLBACK_1(
-                                    Curr_Class::onInitialMoveFinish, this, true));
-
-            Sequence* seq = Sequence::create(delay, move, onMoveFinish, nullptr);
-
-            runAction(seq);
+            tgt = { ScreenSize.width * 0.85f + Origin.x, 
+                    Origin.y + ScreenSize.height * 0.5f};
             break;
         }
 
@@ -352,14 +390,35 @@ void Player::onEnter()
         {
             Vec2 tgt;
 
+            next_ori = Orientation::East;
+
             tgt.x = ScreenSize.width * 0.15f + Origin.x;
             tgt.y = ScreenSize.height * 0.42f + Origin.y;
 
             runAction(MoveTo::create(12.f, tgt));
 
-            break;
+            return;
         }
+
+        default : return;
     }
+
+    MoveTo* move = MoveTo::create(1.25f, tgt);
+
+    DelayTime* delay = DelayTime::create(1.5f);
+
+    CallFunc* onMoveFinish = CallFuncN::create(CC_CALLBACK_1(
+                            Curr_Class::onInitialMoveFinish, this, true));
+
+    Animate* anim = Animate::create(getWalkAnimation(next_ori));
+
+    RepeatForever* repeat = RepeatForever::create(anim);
+
+    Sequence* seq = Sequence::create(delay, move, onMoveFinish, nullptr);
+
+    runAction(repeat);
+    
+    runAction(seq);
 }
 
 bool Player::onContactBegin(PhysicsContact & contact)
@@ -436,7 +495,7 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     if (isEnterInScene())
         return;
     
-    if (keyCode == EventKeyboard::KeyCode::KEY_SPACE)
+    if (keyCode == EventKeyboard::KeyCode::KEY_SPACE && !isDead)
     {
         shoot();
         return;        
@@ -490,7 +549,10 @@ void Player::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /**/)
     });
 
     if (key != nullptr)
+    {
         stopAllActions();
+        setStandSpriteFrame();
+    }
 
     keysPressed.erase(keyCode);
 }
@@ -528,6 +590,10 @@ void Player::useEntrance()
             
             if (getOrientation() == Orientation::North)
                 next_room = AisleScene::createScene();
+            else if (getOrientation() == Orientation::West)
+                next_room = HallLeftScene::createScene();
+            else if (getOrientation() == Orientation::West)
+                next_room = nullptr;
             
             if (next_room != nullptr)
                 sDirector->replaceScene(TransitionFade::create(1.5, next_room));
@@ -542,4 +608,6 @@ void Player::useEntrance()
 void Player::onInitialMoveFinish(Node* sender, bool /**/)
 {
     setEnterInScene(false);
+    stopAllActions();
+    setStandSpriteFrame();
 }
