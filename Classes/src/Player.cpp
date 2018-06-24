@@ -3,6 +3,7 @@
 # include "AisleScene.hpp"
 # include "HallScene.hpp"
 # include "HallLeftScene.hpp"
+# include "HallRightScene.hpp"
 # include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
@@ -368,6 +369,16 @@ void Player::onEnter()
             return;
         }
 
+        case SceneTags::Aisle:
+        {
+            next_ori = Orientation::North;
+
+            tgt = { ScreenSize.width * 0.5f + Origin.x, 
+                    Origin.y + ScreenSize.height * 0.125f};
+
+            break;
+        }
+
         case SceneTags::Hall:
         {
             next_ori= Orientation::North;
@@ -383,6 +394,16 @@ void Player::onEnter()
 
             tgt = { ScreenSize.width * 0.85f + Origin.x, 
                     Origin.y + ScreenSize.height * 0.5f};
+            break;
+        }
+
+        case SceneTags::HallRight:
+        {
+            next_ori = Orientation::East;
+
+            tgt = { ScreenSize.width * 0.125f + Origin.x, 
+                    Origin.y + ScreenSize.height * 0.25f};
+
             break;
         }
 
@@ -592,8 +613,8 @@ void Player::useEntrance()
                 next_room = AisleScene::createScene();
             else if (getOrientation() == Orientation::West)
                 next_room = HallLeftScene::createScene();
-            else if (getOrientation() == Orientation::West)
-                next_room = nullptr;
+            else if (getOrientation() == Orientation::East)
+                next_room = HallRightScene::createScene();
             
             if (next_room != nullptr)
                 sDirector->replaceScene(TransitionFade::create(1.5, next_room));

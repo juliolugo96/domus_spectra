@@ -1,19 +1,19 @@
-# ifndef AISLE_SCENE_HPP
-# define AISLE_SCENE_HPP
+# ifndef HALL_RIGHT_SCENE
+# define HALL_RIGHT_SCENE
 
 # include "SharedDefines.hpp"
+# include "Objects.hpp"
 # include "RoomScene.hpp"
 
 using namespace cocos2d;
 
-
-class AisleScene : public RoomScene
+class HallRightScene : public RoomScene
 {
     public:
-        AisleScene();
-        ~AisleScene();
+        HallRightScene();
+        ~HallRightScene();
 
-        CREATE_FUNC(AisleScene);
+        CREATE_FUNC(HallRightScene);
         
         static Scene* createScene();
 

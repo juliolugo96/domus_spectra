@@ -3,6 +3,7 @@
 
 # include "SharedDefines.hpp"
 # include "ShadowLayer.hpp"
+# include "Objects.hpp"
 # include "AreaTrigger.hpp"
 
 using namespace cocos2d;

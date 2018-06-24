@@ -1,33 +1,33 @@
-# include "AisleScene.hpp"
+# include "HallRightScene.hpp"
 
-AisleScene::AisleScene() : RoomScene("aisle.png")
+HallRightScene::HallRightScene() : RoomScene("hall-3.png")
 {
 
 }
 
-AisleScene::~AisleScene()
+HallRightScene::~HallRightScene()
 {
 
 }
 
-Scene* AisleScene::createScene()
+Scene* HallRightScene::createScene()
 {
     RefPtr<Scene> main_screen = Scene::createWithPhysics();
 
-    RefPtr<Layer> main_layer = AisleScene::create();
+    RefPtr<Layer> main_layer = HallRightScene::create();
 
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
     main_layer->setTag(SpriteTags::LAYER);
-    main_screen->setTag(SceneTags::Aisle);
+    main_screen->setTag(SceneTags::HallRight);
 
     main_screen->addChild(main_layer);
 
     return main_screen;
 }
 
-bool AisleScene::init()
+bool HallRightScene::init()
 {
     if (!Layer::init())
         return false;
@@ -35,13 +35,14 @@ bool AisleScene::init()
     addBackground();
     addPlayer();
     addAreaTriggers();
+    addHealthBar();
 
     scheduleUpdate();
 
     return true;
 }
 
-void AisleScene::addPlayer()
+void HallRightScene::addPlayer()
 {
     RefPtr<Player> player = sPlayer;
 
@@ -57,8 +58,8 @@ void AisleScene::addPlayer()
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
-    Vec2 const playerPos = { ScreenSize.width * 0.5f + Origin.x, 
-                             Origin.y - ScreenSize.height * 0.125f};
+    Vec2 const playerPos = { Origin.x - ScreenSize.width * 0.1f, 
+                            ScreenSize.height * 0.25f + Origin.y};
 
     player->setPosition(playerPos);
 
@@ -71,8 +72,8 @@ void AisleScene::addPlayer()
     this->addChild(player);
 }
 
-void AisleScene::addMedicalBoxes()
+void HallRightScene::addAreaTriggers()
 {}
 
-void AisleScene::addAreaTriggers()
+void HallRightScene::addMedicalBoxes()
 {}
