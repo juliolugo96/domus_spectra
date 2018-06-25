@@ -37,6 +37,7 @@ bool FinalScene::init()
     AddBackground();
     AddPlayer();
     AddAudio();
+    AddBoss();
 
     return true;
 }
@@ -44,6 +45,18 @@ bool FinalScene::init()
 void FinalScene::AddAudio()
 {
     sAudioEngine->playBackgroundMusic("final-stage.mp3", true);
+}
+
+void FinalScene::AddBoss()
+{
+    auto boss = Boss::create();
+
+    if(boss == nullptr)
+        return;
+
+    boss->setPosition(Vec2(512, 384));
+
+    this -> addChild(boss);
 }
 
 void FinalScene::AddBackground()

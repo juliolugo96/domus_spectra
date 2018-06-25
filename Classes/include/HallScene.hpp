@@ -21,6 +21,8 @@ class HallScene : public RoomScene
 
         bool init() override;
 
+       // void update(float) override;
+
     private:
         void addAudio();
         void addEnemy();

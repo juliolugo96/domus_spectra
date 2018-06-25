@@ -34,7 +34,7 @@ bool AisleScene::init()
 
     addBackground();
     addPlayer();
-    addAreaTriggers();
+   addAreaTriggers();
 
     scheduleUpdate();
 

@@ -2,6 +2,7 @@
 #define FINAL_SCENE_HPP
 
 # include "SharedDefines.hpp"
+# include "Boss.hpp"
 
 using namespace cocos2d;
 
@@ -19,6 +20,7 @@ class FinalScene : public Layer
         void AddAudio();
         void AddBackground();
         void AddPlayer();
+        void AddBoss();
 };
 
 # endif
