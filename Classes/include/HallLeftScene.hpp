@@ -23,6 +23,8 @@ class HallLeftScene : public RoomScene
         void addPlayer() override;
         void addAreaTriggers() override;
         void addMedicalBoxes() override;
+
+        RefPtr<AreaTrigger> backArea;
 };
 
 # endif

@@ -23,6 +23,9 @@ class AisleScene : public RoomScene
         void addPlayer() override;
         void addAreaTriggers() override;
         void addMedicalBoxes() override;
+
+        RefPtr<AreaTrigger> backArea;
+        RefPtr<AreaTrigger> bossDoor;
 };
 
 # endif

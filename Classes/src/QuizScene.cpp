@@ -1,5 +1,15 @@
 # include "QuizScene.hpp"
 
+QuizScene::QuizScene()
+{
+    
+}
+
+QuizScene::~QuizScene()
+{
+
+}
+
 Scene* QuizScene::createScene()
 {
     RefPtr<Scene> main_screen = Scene::create();
@@ -30,7 +40,7 @@ bool QuizScene::init()
 
 void QuizScene::addBackground()
 {
-    RefPtr<Sprite> background   = Sprite::createWithSpriteFrameName("riddle.png");
+    RefPtr<Sprite> background = Sprite::createWithSpriteFrameName("riddle.png");
 
     if (background == nullptr)
         return;
@@ -41,10 +51,7 @@ void QuizScene::addBackground()
     Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
                             ScreenSize.height/2 + Origin.y };
 
-    shadowLayer = ShadowLayer::create();
-
     background->setPosition(CenterPos);
-    background->addChild(shadowLayer);
 
     this->addChild(background);
 }
@@ -88,24 +95,24 @@ void QuizScene::addMenu()
     RefPtr<Label> backLabel = Label::createWithTTF("Exit", 
                                                     "fonts/Marker Felt.ttf", 18);
 
-    RefPtr<Label> backLabel = Label::createWithTTF("Get a Clue for Boss Door", 
+    RefPtr<Label> clueLabel = Label::createWithTTF("Get a Clue for Boss Door", 
                                                     "fonts/Marker Felt.ttf", 18);
 
-    RefPtr<MenuItemLabel> menuItem = MenuItemLabel::create(backLabel, 
-                                CC_CALLBACK_1(Curr_Class::onBackPressed, this));
-
-    RefPtr<MenuItemLabel> menuItem = MenuItemLabel::create(backLabel, 
+    RefPtr<MenuItemLabel> backItem = MenuItemLabel::create(clueLabel, 
                                 CC_CALLBACK_1(Curr_Class::onCluePressed, this));
-    
-    RefPtr<Menu> main_menu = Menu::create(menuItem, nullptr);
 
-    main_menu->setPosition(CenterPos);
+    RefPtr<MenuItemLabel> clueItem = MenuItemLabel::create(backLabel, 
+                                CC_CALLBACK_1(Curr_Class::onBackPressed, this));
+    
+    RefPtr<Menu> main_menu = Menu::create(backItem.get(), clueItem.get(), NULL);
+
+    main_menu->setPosition(menuPos);
 
     this->addChild(main_menu);
     
 }
 
-void QuizScene::onBackPressed(Ref /**/)
+void QuizScene::onBackPressed(Ref* /**/)
 {
     sDirector->popScene();
 }

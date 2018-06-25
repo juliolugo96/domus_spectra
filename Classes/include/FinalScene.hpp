@@ -1,11 +1,11 @@
 #ifndef FINAL_SCENE_HPP
 #define FINAL_SCENE_HPP
 
-# include "SharedDefines.hpp"
+# include "RoomScene.hpp"
 
 using namespace cocos2d;
 
-class FinalScene : public Layer
+class FinalScene : public RoomScene
 {
     public:
         FinalScene();
@@ -16,9 +16,11 @@ class FinalScene : public Layer
         bool init() override;
 
     private:
-        void AddAudio();
-        void AddBackground();
-        void AddPlayer();
+        void addAudio();
+
+        void addPlayer() override;
+        void addAreaTriggers() override;
+        void addMedicalBoxes() override;
 };
 
 # endif

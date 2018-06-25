@@ -1,33 +1,33 @@
-# include "HallLeftScene.hpp"
+# include "HallRightScene.hpp"
 
-HallLeftScene::HallLeftScene() : RoomScene("hall-2.png")
+HallRightScene::HallRightScene() : RoomScene("hall-3.png")
 {
 
 }
 
-HallLeftScene::~HallLeftScene()
+HallRightScene::~HallRightScene()
 {
 
 }
 
-Scene* HallLeftScene::createScene()
+Scene* HallRightScene::createScene()
 {
     RefPtr<Scene> main_screen = Scene::createWithPhysics();
 
-    RefPtr<Layer> main_layer = HallLeftScene::create();
+    RefPtr<Layer> main_layer = HallRightScene::create();
 
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
     main_layer->setTag(SpriteTags::LAYER);
-    main_screen->setTag(SceneTags::HallLeft);
+    main_screen->setTag(SceneTags::HallRight);
 
     main_screen->addChild(main_layer);
 
     return main_screen;
 }
 
-bool HallLeftScene::init()
+bool HallRightScene::init()
 {
     if (!Layer::init())
         return false;
@@ -43,7 +43,7 @@ bool HallLeftScene::init()
     return true;
 }
 
-void HallLeftScene::addPlayer()
+void HallRightScene::addPlayer()
 {
     RefPtr<Player> player = sPlayer;
 
@@ -59,8 +59,8 @@ void HallLeftScene::addPlayer()
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
-    Vec2 const playerPos = { ScreenSize.width * 1.15f + Origin.x, 
-                            ScreenSize.height * 0.5f + Origin.y};
+    Vec2 const playerPos = { Origin.x - ScreenSize.width * 0.1f, 
+                            ScreenSize.height * 0.25f + Origin.y};
 
     player->setPosition(playerPos);
 
@@ -73,19 +73,27 @@ void HallLeftScene::addPlayer()
     this->addChild(player);
 }
 
-void HallLeftScene::addAreaTriggers()
+void HallRightScene::addAreaTriggers()
 {
     Size const ScreenSize = sDirector->getVisibleSize();
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
-    Vec2 const backAreaPos = { ScreenSize.width * 0.95f + Origin.x, 
-                            ScreenSize.height * 0.3f + Origin.y};
+    Vec2 const backPos = { Origin.x + ScreenSize.width * 0.05f, 
+                            ScreenSize.height * 0.32f + Origin.y};
+
+    Vec2 const quizPos = { Origin.x + ScreenSize.width * 0.84f, 
+                            ScreenSize.height * 0.29f + Origin.y};
 
     backArea = AreaTrigger::create();
+    quizArea = AreaTrigger::create();
 
-    backArea->setPosition(backAreaPos);
-    backArea->setRect(backAreaPos, 50.f, 150.f);
-    backArea->setOrientation(Orientation::East);
+    quizArea->setPosition(quizPos);
+    quizArea->setOrientation(Orientation::East);
+    quizArea->setRect(quizPos, 20.f, 50.f);
+
+    backArea->setPosition(backPos);
+    backArea->setOrientation(Orientation::West);
+    backArea->setRect(backPos, 20.f, 100.f);
 
     backArea->setOnObjectEnter([this] (Node*& object) -> void
     {
@@ -131,8 +139,51 @@ void HallLeftScene::addAreaTriggers()
             isInside = true;
     });
 
+    quizArea->setOnObjectEnter([this] (Node*& object) -> void
+    {
+        if (object == nullptr)
+            return;
+
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        sPlayer->setOpenDoor(true);
+        this->handleButton(true);
+    });
+
+    quizArea->setOnObjectExit([this] (Node*& object) -> void
+    {
+        if (object == nullptr)
+            return;
+
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        sPlayer->setOpenDoor(false);
+        this->handleButton(false);
+    });
+
+    quizArea->setOnCheckObject([this] (Node*& object, bool & isInside) -> void
+    {
+        if (object == nullptr)
+            return;
+
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        if (!isInside)
+            return;    
+        
+        if (quizArea->hasOrientation() && 
+            quizArea->getOrientation() != sPlayer->getOrientation())
+            isInside = false;
+        else
+            isInside = true;
+    });
+
     this->addChild(backArea);
+    this->addChild(quizArea);
 }
 
-void HallLeftScene::addMedicalBoxes()
+void HallRightScene::addMedicalBoxes()
 {}

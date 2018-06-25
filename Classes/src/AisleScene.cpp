@@ -34,6 +34,7 @@ bool AisleScene::init()
 
     addBackground();
     addPlayer();
+    addButtonForUseAreaTriggers();
     addAreaTriggers();
 
     scheduleUpdate();
@@ -75,4 +76,114 @@ void AisleScene::addMedicalBoxes()
 {}
 
 void AisleScene::addAreaTriggers()
-{}
+{
+   backArea = AreaTrigger::create();
+   bossDoor = AreaTrigger::create();
+
+   Size const ScreenSize = sDirector->getVisibleSize();
+   Vec2 const Origin = sDirector->getVisibleOrigin();
+
+   Vec2 const doorPos = { ScreenSize.width * 0.49f + Origin.x, 
+                        Origin.y + ScreenSize.height * 0.88f };
+
+   Vec2 const backAreaPos = { ScreenSize.width * 0.49f + Origin.x,
+                              ScreenSize.height * 0.15f + Origin.y };
+
+   backArea->setPosition(backAreaPos);
+   backArea->setOrientation(Orientation::South);
+   backArea->setRect(backAreaPos, 60.f, 50.f);
+
+   bossDoor->setPosition(doorPos);
+   bossDoor->setOrientation(Orientation::North);
+   bossDoor->setRect(doorPos, 60.f, 50.f);
+
+   backArea->setOnObjectEnter([this] (Node*& object) -> void
+   {
+      if (object == nullptr)
+         return;
+      
+      if (object->getTag() != SpriteTags::PLAYER)
+         return;
+
+      sPlayer->setOpenDoor(true);
+      sPlayer->setExitOfRoom(true);
+      this->handleButton(true);
+   });
+
+   backArea->setOnObjectExit([this] (Node*& object) -> void
+   {
+      if (object == nullptr)
+         return;
+      
+      if (object->getTag() != SpriteTags::PLAYER)
+         return;
+
+      sPlayer->setOpenDoor(false);
+      sPlayer->setExitOfRoom(false);
+      this->handleButton(false);
+   });
+
+   backArea->setOnCheckObject([this] (Node*& object, bool & isInside) -> void
+    {
+        if (object == nullptr)
+            return;
+
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        if (!isInside)
+            return;    
+
+        if (backArea->hasOrientation() && 
+            backArea->getOrientation() != sPlayer->getOrientation())
+            isInside = false;
+        else
+            isInside = true;
+    });
+
+   bossDoor->setOnObjectEnter([this] (Node*& object) -> void
+   {
+      if (object == nullptr)
+         return;
+      
+      if (object->getTag() != SpriteTags::PLAYER)
+         return;
+
+      sPlayer->setOpenDoor(true);
+      this->handleButton(true);
+   });
+
+   bossDoor->setOnObjectExit([this] (Node*& object) -> void
+   {
+      if (object == nullptr)
+         return;
+      
+      if (object->getTag() != SpriteTags::PLAYER)
+         return;
+
+      sPlayer->setOpenDoor(false);
+      this->handleButton(false);
+   });
+
+   bossDoor->setOnCheckObject([this] (Node*& object, bool & isInside) -> void
+    {
+        if (object == nullptr)
+            return;
+
+        if (object->getTag() != SpriteTags::PLAYER)
+            return;
+
+        if (!isInside)
+            return;    
+
+        if (bossDoor->hasOrientation() && 
+            bossDoor->getOrientation() != sPlayer->getOrientation())
+            isInside = false;
+        else
+            isInside = true;
+    });
+
+    addChild(backArea);
+    addChild(bossDoor);
+
+}

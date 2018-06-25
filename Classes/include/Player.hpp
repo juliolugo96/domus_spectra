@@ -30,6 +30,7 @@ class Player : public Sprite
         bool initWithSpriteFrame(SpriteFrame* /**/) override;
 
         void setOpenDoor(bool enable) { canUseDoor = enable; }
+        void setExitOfRoom(bool enable) { isMovingToPrevRoom = enable; }
         void setEnterInScene(bool enter) { isEnterOnScene = enter; }
         void setOrientation(Orientation ori);
         void modHp(int8 const value);
@@ -40,6 +41,7 @@ class Player : public Sprite
 
         bool isEnterInScene() const { return isEnterOnScene; }
         bool isEnableForOpenDoor() const { return canUseDoor; }
+        bool isExitOfRoom() const { return isMovingToPrevRoom; }
         
         void onEnter() override;
         void update(float  /**/) override;
@@ -64,10 +66,16 @@ class Player : public Sprite
         
         void dead();
         void useEntrance();
+        void useExit();
 
         bool isDead;
         bool canUseDoor;
         bool isEnterOnScene;
+        bool isMovingToPrevRoom;
+
+        Vec2 backDest;
+        Vec2 backInitPos;
+
         Orientation orientation;
         uint16 score;
         int8 life;

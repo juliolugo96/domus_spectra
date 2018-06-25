@@ -35,6 +35,8 @@ bool Boss::initWithSpriteFrame(SpriteFrame* frame)
     
     addAnimation();
 
+    scheduleUpdate();
+
     return true;
 }
 
@@ -51,7 +53,8 @@ void Boss::onEnter()
     tgt.y = ScreenSize.height * 0.82f + Origin.y;
 
 
-    Sequence* seq = Sequence::create(DelayTime::create(10),MoveTo::create(2.f, tgt), NULL);
+    Sequence* seq = Sequence::create(DelayTime::create(1.10f), 
+                                     MoveTo::create(2.f, tgt), NULL);
 
     runAction(seq);
 }

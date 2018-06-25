@@ -3,7 +3,7 @@
 
 Scene* FinalScene::createScene()
 {
-    RefPtr<Scene> main_screen = Scene::create();
+    RefPtr<Scene> main_screen = Scene::createWithPhysics();
 
     RefPtr<Layer> main_layer = FinalScene::create();
 
@@ -11,15 +11,15 @@ Scene* FinalScene::createScene()
         return nullptr;
 
     main_layer->setTag(SpriteTags::LAYER);
+    main_screen->setTag(SceneTags::FinalStage);
     
     main_screen->addChild(main_layer);
 
-    main_screen->setTag(SceneTags::FinalStage);
 
     return main_screen;
 }
 
-FinalScene::FinalScene() : Layer()
+FinalScene::FinalScene() : RoomScene("final_stage.png")
 {
 
 }
@@ -34,37 +34,22 @@ bool FinalScene::init()
     if (!Layer::init())
         return false;
 
-    AddBackground();
-    AddPlayer();
-    AddAudio();
+    addBackground();
+    addHealthBar();
+    addPlayer();
+    addAudio();
+
+    scheduleUpdate();
 
     return true;
 }
 
-void FinalScene::AddAudio()
+void FinalScene::addAudio()
 {
     sAudioEngine->playBackgroundMusic("final-stage.mp3", true);
 }
 
-void FinalScene::AddBackground()
-{
-    RefPtr<Sprite> background = Sprite::create("final_stage.png");
-
-    if (background == nullptr)
-        return;
-
-    Size const ScreenSize = sDirector->getVisibleSize();
-    Vec2 const Origin = sDirector->getVisibleOrigin();
-
-    Vec2 const CenterPos = { ScreenSize.width/2 + Origin.x, 
-                            ScreenSize.height/2 + Origin.y };
-
-    background->setPosition(CenterPos);
-
-    this->addChild(background);
-}
-
-void FinalScene::AddPlayer()
+void FinalScene::addPlayer()
 {
     RefPtr<Player> player = sPlayer;
 
@@ -81,9 +66,10 @@ void FinalScene::AddPlayer()
     Vec2 const Origin = sDirector->getVisibleOrigin();
 
     Vec2 spritePos = { Origin.x - ScreenSize.width * 0.05f, 
-                            ScreenSize.height * 0.42f + Origin.y };
+                        ScreenSize.height * 0.42f + Origin.y };
 
     player->setPosition(spritePos);
+    player->setOrientation(Orientation::East);
 
     RefPtr<Sprite> boss = Boss::create();
 
@@ -95,6 +81,16 @@ void FinalScene::AddPlayer()
 
     boss->setPosition(spritePos);
 
-    this->addChild(player);
-    this->addChild(boss);
+    addChild(boss);
+    addChild(player);
+}
+
+void FinalScene::addAreaTriggers()
+{
+
+}
+
+void FinalScene::addMedicalBoxes()
+{
+
 }

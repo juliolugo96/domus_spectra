@@ -8,7 +8,8 @@
 
 static RefPtr<Player> sSharedPlayer = nullptr;
 
-Player::Player() : Sprite(), score(0), life(100), isDead(false)
+Player::Player() : Sprite(), score(0), life(100), isDead(false),
+isMovingToPrevRoom(false)
 {
 }
 
@@ -361,67 +362,72 @@ void Player::onEnter()
 
     setEnterInScene(true);
 
-    switch (curr_scene->getTag())
+    if (isExitOfRoom())
     {
-        case SceneTags::Entrance:
-        {
-            setEnterInScene(false);
-            return;
-        }
+      next_ori = getOrientation();
+      setPosition(backInitPos);
+      tgt = backDest;
+    }
+    else
+    {
+      switch (curr_scene->getTag())
+      {
+          case SceneTags::Entrance:
+          {
+              setEnterInScene(false);
+              return;
+          }
 
-        case SceneTags::Aisle:
-        {
-            next_ori = Orientation::North;
+          case SceneTags::Aisle:
+          {
+              next_ori = Orientation::North;
 
-            tgt = { ScreenSize.width * 0.5f + Origin.x, 
-                    Origin.y + ScreenSize.height * 0.125f};
+              tgt = { ScreenSize.width * 0.5f + Origin.x, 
+                      Origin.y + ScreenSize.height * 0.125f};
 
-            break;
-        }
+              break;
+          }
 
-        case SceneTags::Hall:
-        {
-            next_ori= Orientation::North;
+          case SceneTags::Hall:
+          {
+              next_ori= Orientation::North;
 
-            tgt = { ScreenSize.width/2 + Origin.x, 
-                            ScreenSize.height * 0.15f + Origin.y };
-            break;
-        }
+              tgt = { ScreenSize.width/2 + Origin.x, 
+                              ScreenSize.height * 0.15f + Origin.y };
+              break;
+          }
 
-        case SceneTags::HallLeft:
-        {
-            next_ori = Orientation::West;
+          case SceneTags::HallLeft:
+          {
+              next_ori = Orientation::West;
 
-            tgt = { ScreenSize.width * 0.85f + Origin.x, 
-                    Origin.y + ScreenSize.height * 0.5f};
-            break;
-        }
+              tgt = { ScreenSize.width * 0.85f + Origin.x, 
+                      Origin.y + ScreenSize.height * 0.5f};
+              break;
+          }
 
-        case SceneTags::HallRight:
-        {
-            next_ori = Orientation::East;
+          case SceneTags::HallRight:
+          {
+              next_ori = Orientation::East;
 
-            tgt = { ScreenSize.width * 0.125f + Origin.x, 
-                    Origin.y + ScreenSize.height * 0.25f};
+              tgt = { ScreenSize.width * 0.125f + Origin.x, 
+                      Origin.y + ScreenSize.height * 0.25f};
 
-            break;
-        }
+              break;
+          }
 
-        case SceneTags::FinalStage:
-        {
-            Vec2 tgt;
+          case SceneTags::FinalStage:
+          {
+              next_ori = Orientation::East;
+              
+              tgt.x = ScreenSize.width * 0.15f + Origin.x;
+              tgt.y = ScreenSize.height * 0.42f + Origin.y;
 
-            next_ori = Orientation::East;
+              break;
+          }
 
-            tgt.x = ScreenSize.width * 0.15f + Origin.x;
-            tgt.y = ScreenSize.height * 0.42f + Origin.y;
-
-            runAction(MoveTo::create(12.f, tgt));
-
-            return;
-        }
-
-        default : return;
+          default : return;
+      }
     }
 
     MoveTo* move = MoveTo::create(1.25f, tgt);
@@ -528,9 +534,26 @@ void Player::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
         return;
     }
 
+    if (keyCode == EventKeyboard::KeyCode::KEY_B && isEnableForOpenDoor())
+    {
+        if (getScene() && getScene()->getTag() == SceneTags::Aisle &&
+            getOrientation() == Orientation::North)
+        {
+            Scene* next_room = FinalScene::createScene();
+
+            sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+            return;
+        }
+
+        return;
+    }
+
     if (keyCode == EventKeyboard::KeyCode::KEY_O && isEnableForOpenDoor())
     {
-        useEntrance();
+        if (!isExitOfRoom())
+            useEntrance();
+        else
+            useExit();
         return;
     }
 
@@ -600,8 +623,13 @@ void Player::useEntrance()
 
         case SceneTags::Aisle:
         {
-            Scene* next_room = FinalScene::createScene();
-            sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+            Scene* next_room = nullptr;
+
+            if (getOrientation() == Orientation::South)
+                next_room = HallScene::createScene();
+
+            if (next_room != nullptr)
+                sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
             break;
         }
 
@@ -622,12 +650,90 @@ void Player::useEntrance()
             break;
         }
 
+        case SceneTags::HallRight:
+        {
+          Scene* next_room = nullptr;
+
+          if (getOrientation() == Orientation::West)
+            next_room = HallScene::createScene();
+
+          if (next_room != nullptr)
+            sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+
+          break;
+        }
+
+        case SceneTags::HallLeft:
+        {
+            Scene* next_room = nullptr;
+
+            if (getOrientation() == Orientation::East)
+                next_room = HallScene::createScene();
+
+            if (next_room != nullptr)
+                sDirector->replaceScene(TransitionFade::create(1.5f, next_room));
+
+            break;
+        }
+
         default : break;
     }
 }
 
+void Player::useExit()
+{
+    Scene* scene = getScene();
+
+    if (scene == nullptr)
+        return;
+
+    Vec2 const Origin = sDirector->getVisibleOrigin();
+    Size const & ScreenSize = sDirector->getVisibleSize();
+
+    switch (scene->getTag())
+    {
+      case SceneTags::HallRight:
+      {
+        backInitPos = { Origin.x + ScreenSize.width * 1.10f,
+                        Origin.y + ScreenSize.height * 0.25f };
+
+        backDest = {  Origin.x + ScreenSize.width * 0.95f,
+                      Origin.y + ScreenSize.height * 0.25f };
+
+        break;
+      }
+
+      case SceneTags::HallLeft:
+      {
+        backInitPos = { Origin.x - ScreenSize.width * 0.1f,
+                        Origin.y + ScreenSize.height * 0.25f };
+
+        backDest = {  Origin.x + ScreenSize.width * 0.15f,
+                      Origin.y + ScreenSize.height * 0.25f };
+        break;
+      }
+
+      case SceneTags::Aisle:
+      case SceneTags::Hall:
+      {
+        backInitPos = { Origin.x + ScreenSize.width * 0.5f,
+                        Origin.y + ScreenSize.height * 1.10f };
+
+        backDest = {  Origin.x + ScreenSize.width * 0.5f,
+                      Origin.y + ScreenSize.height * 0.85f };
+        break;
+      }
+
+      default : break;
+    }
+
+    useEntrance();
+}
+
 void Player::onInitialMoveFinish(Node* sender, bool /**/)
 {
+    setExitOfRoom(false);
+    setOpenDoor(false);
     setEnterInScene(false);
     stopAllActions();
     setStandSpriteFrame();
