@@ -108,12 +108,32 @@ void QuizScene::addMenu()
 
     main_menu->setPosition(menuPos);
 
+    main_menu->alignItemsHorizontallyWithPadding(5.f);
+
     this->addChild(main_menu);
     
 }
 
 void QuizScene::onBackPressed(Ref* /**/)
 {
+    if (sPlayer != nullptr)
+    {
+        Player* player = sPlayer;
+
+        player->setMovingDisable(true);
+
+        CustomDelayedOperation op;
+
+        op.first = ([&player] () -> void
+        {
+            player->setMovingDisable(false);
+        });
+
+        op.second = 500.f;
+
+        player->addDelayedOperation(op);
+    }
+    
     sDirector->popScene();
 }
 
