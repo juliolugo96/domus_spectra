@@ -34,11 +34,13 @@ bool HallScene::init()
         return false;
 
     addBackground();
+    addEnemy();
     addPlayer();
     addButtonForUseAreaTriggers();
     addAreaTriggers();
     addHealthBar();
-
+    
+    addAudio();
     scheduleUpdate();
 
     return true;
@@ -76,6 +78,31 @@ void HallScene::addPlayer()
 
 void HallScene::addMedicalBoxes()
 {}
+
+void HallScene::addEnemy()
+{
+  for(int i = 0; i < 6; i++)
+  {
+    auto enemy1 = Enemy::create();  
+
+    if(enemy1 == nullptr)
+        return;
+
+    
+    enemy1->setPosition(Vec2(rand()%1000, rand()%700));
+  
+
+    this -> addChild(enemy1, 0);
+  }
+  
+    
+}
+
+void HallScene::addAudio()
+{
+    sAudioEngine->playBackgroundMusic("hall-stage.mp3", true);
+    sAudioEngine->setBackgroundMusicVolume(0.5f);
+}
 
 void HallScene::addAreaTriggers()
 {   

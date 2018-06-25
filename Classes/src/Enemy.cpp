@@ -12,7 +12,7 @@ Enemy::~Enemy()
 
 Enemy* Enemy::create()
 {
-    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName("enemyE1.png");
+    SpriteFrame* frame = sSpriteCache->getSpriteFrameByName("enemy/enemyE1.png");
 
     if (frame == nullptr)
         return nullptr;

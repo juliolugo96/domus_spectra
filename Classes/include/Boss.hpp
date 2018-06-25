@@ -19,6 +19,7 @@ class Boss : public Sprite
     private:
         void shoot();
         void addAnimation();
+        void shootSkull();
 };
 
 # endif

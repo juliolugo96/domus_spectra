@@ -19,7 +19,7 @@ Scene* MainMenuScene::createScene()
     if (main_screen == nullptr or main_layer == nullptr)
         return nullptr;
 
-    sAudioEngine->playBackgroundMusic("menu-theme.mp3", true);
+    sAudioEngine->playBackgroundMusic("hall-stage.mp3", true);
     sAudioEngine->setBackgroundMusicVolume(0.5f);
 
     main_screen->addChild(main_layer);
@@ -43,7 +43,7 @@ void MainMenuScene::onExit()
 {
     Layer::onExit();
     
-    sAudioEngine->stopBackgroundMusic(true);
+  //  sAudioEngine->stopBackgroundMusic(true);
 }
 
 void MainMenuScene::addBackground()
@@ -98,13 +98,14 @@ void MainMenuScene::addMenu()
 
 void MainMenuScene::addAudio()
 {
-    sAudioEngine->playBackgroundMusic("menu-theme.mp3", true);
-    sAudioEngine->setBackgroundMusicVolume(0.5f);
+   /* sAudioEngine->playBackgroundMusic("menu-theme.mp3", true);
+    sAudioEngine->setBackgroundMusicVolume(0.5f);*/
 }
 
 void MainMenuScene::onPlayPressed(Ref* /**/)
 {
     RefPtr<Scene> init_level = Entrance::createScene();
+ //   sAudioEngine->pauseBackgroundMusic();
 
     sDirector->replaceScene(TransitionFlipAngular::create(2.f, init_level));
 }

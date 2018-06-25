@@ -341,7 +341,7 @@ void Player::shoot()
 
     runAction(anim);
 
-    sAudioEngine->playEffect("shoot.mp3", false, 1.f, 1.f);
+    sAudioEngine->playEffect("shoot.mp3", false, 1.f, 1.f, 0.3f);
 }
 
 void Player::onEnter()

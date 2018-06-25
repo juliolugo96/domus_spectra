@@ -21,7 +21,6 @@ Scene* Entrance::createScene()
     main_layer->setTag(SpriteTags::LAYER);
     
     main_screen->addChild(main_layer);
-
     main_screen->setTag(SceneTags::Entrance);
 
     return main_screen;
@@ -38,10 +37,16 @@ bool Entrance::init()
     addAreaTriggers();
     addButtonForUseAreaTriggers();
     addHealthBar();
-
+    addAudio();
     scheduleUpdate();
 
     return true;
+}
+
+void Entrance::addAudio()
+{
+    sAudioEngine->playBackgroundMusic("hall-stage.mp3", true);
+    sAudioEngine->setBackgroundMusicVolume(1.f);
 }
 
 void Entrance::addPlayer()

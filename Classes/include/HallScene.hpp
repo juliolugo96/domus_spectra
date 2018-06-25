@@ -4,6 +4,7 @@
 # include "SharedDefines.hpp"
 # include "Objects.hpp"
 # include "RoomScene.hpp"
+# include "Enemy.hpp"
 # include <array.H>
 
 using namespace cocos2d;
@@ -21,7 +22,8 @@ class HallScene : public RoomScene
         bool init() override;
 
     private:
-
+        void addAudio();
+        void addEnemy();
         void addPlayer() override;
         void addMedicalBoxes() override;
         void addAreaTriggers() override;

@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 3.1)
 set(APP_NAME DomusSpectra)
 
 # DeSiGNAR Location
-set(DSG "/home/berti/libs/DeSiGNAR")
+set(DSG "/home/ignisgravitas/DeSiGNAR")
 
 project(${APP_NAME})
 
