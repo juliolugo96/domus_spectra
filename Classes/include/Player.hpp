@@ -3,6 +3,7 @@
 
 # include "SharedDefines.hpp"
 # include <array.H>
+# include <list.H>
 # include <map>
 
 using namespace cocos2d;
@@ -32,13 +33,16 @@ class Player : public Sprite
         void setOpenDoor(bool enable) { canUseDoor = enable; }
         void setExitOfRoom(bool enable) { isMovingToPrevRoom = enable; }
         void setEnterInScene(bool enter) { isEnterOnScene = enter; }
+        void setMovingDisable(bool enable) { isDisabledMoving = enable; }
         void setOrientation(Orientation ori);
         void modHp(int8 const value);
         
         void shoot();
+        void addDelayedOperation(CustomDelayedOperation const & /**/);
         bool isOnScene() const;
         bool onContactBegin(PhysicsContact & /**/);
 
+        bool isMovingDisabled() const { return isDisabledMoving; }
         bool isEnterInScene() const { return isEnterOnScene; }
         bool isEnableForOpenDoor() const { return canUseDoor; }
         bool isExitOfRoom() const { return isMovingToPrevRoom; }
@@ -57,6 +61,8 @@ class Player : public Sprite
         void addPhysicShape();
         void initKeyMoveArray();
         void setStandSpriteFrame();
+
+        void updateDelayedOperations(float /**/);
         
         Animation* getWalkAnimation(Orientation /**/);
         Animation* getShootAnimation(Orientation /**/);
@@ -72,6 +78,7 @@ class Player : public Sprite
         bool canUseDoor;
         bool isEnterOnScene;
         bool isMovingToPrevRoom;
+        bool isDisabledMoving;
 
         Vec2 backDest;
         Vec2 backInitPos;
@@ -80,7 +87,9 @@ class Player : public Sprite
         uint16 score;
         int8 life;
 
+        DLList<CustomDelayedOperation> delayedOperations;
         DynArray<KeyForMoveInfo> keyMovement;
+        
         std::map<EventKeyboard::KeyCode, TimePoint> keysPressed;
 };
 

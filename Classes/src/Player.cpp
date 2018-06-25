@@ -4,17 +4,19 @@
 # include "HallScene.hpp"
 # include "HallLeftScene.hpp"
 # include "HallRightScene.hpp"
+# include "QuizScene.hpp"
 # include "Objects.hpp"
 
 static RefPtr<Player> sSharedPlayer = nullptr;
 
 Player::Player() : Sprite(), score(0), life(100), isDead(false),
-isMovingToPrevRoom(false)
+isMovingToPrevRoom(false), isDisabledMoving(false)
 {
 }
 
 Player::~Player()
 {
+  delayedOperations.clear();
 }
 
 Player* Player::getInstance()
@@ -105,6 +107,8 @@ void Player::update(float dt)
 {
     Sprite::update(dt);
 
+    updateDelayedOperations(dt);
+
     if (isDead)
     {
         setSpriteFrame("main_character/pcDead.png");
@@ -118,6 +122,27 @@ void Player::update(float dt)
         if (keysPressed.find(it.first) != keysPressed.end())
             onKeyPressed(it.first, nullptr);
     }
+}
+
+void Player::updateDelayedOperations(float dt)
+{
+  for (auto itr = delayedOperations.begin(); itr.has_current(); itr.next())
+  {
+    CustomDelayedOperation & op = itr.get_current();
+
+    op.second -= dt;
+
+    if (op.second <= 0)
+    {
+      op.first();
+      itr.del();
+    }
+  }
+}
+
+void Player::addDelayedOperation(CustomDelayedOperation const & op)
+{
+  delayedOperations.append(op);
 }
 
 void Player::modHp(int8 const value)
@@ -348,6 +373,9 @@ void Player::shoot()
 void Player::onEnter()
 {
     Sprite::onEnter();
+
+    if (isMovingDisabled())
+        return;
 
     Scene* curr_scene = getScene();
 
@@ -656,6 +684,12 @@ void Player::useEntrance()
 
           if (getOrientation() == Orientation::West)
             next_room = HallScene::createScene();
+          else
+          {
+            next_room = QuizScene::createScene();
+            sDirector->pushScene(TransitionFade::create(1.5f, next_room));
+            return;
+          }
 
           if (next_room != nullptr)
             sDirector->replaceScene(TransitionFade::create(1.5f, next_room));

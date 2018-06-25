@@ -44,6 +44,8 @@ enum ActionTags
     ANIMATE,
 };
 
+using CustomDelayedOperation = std::pair<std::function<void()>, float>;
+
 using uint8 = uint8_t;
 using uint32 = uint32_t;
 using int8 = int8_t;
