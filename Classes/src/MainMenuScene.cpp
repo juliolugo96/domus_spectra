@@ -105,9 +105,7 @@ void MainMenuScene::addAudio()
 void MainMenuScene::onPlayPressed(Ref* /**/)
 {
     RefPtr<Scene> init_level = Entrance::createScene();
- //   sAudioEngine->pauseBackgroundMusic();
-
-    sDirector->replaceScene(TransitionFlipAngular::create(2.f, init_level));
+    sDirector->replaceScene(TransitionFade::create(2.f, init_level));
 }
 
 void MainMenuScene::onExitPressed(Ref* /**/)
